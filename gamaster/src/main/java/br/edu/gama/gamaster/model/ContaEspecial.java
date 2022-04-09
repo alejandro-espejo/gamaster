@@ -7,8 +7,8 @@ public class ContaEspecial extends Conta{
     private BigDecimal limiteDeCreditoPreAprov;
 
     public ContaEspecial(BigDecimal saldo, String agencia, String numeroConta,
-                         CartaoCredito cartao, BigDecimal limiteDeCreditoPreAprov){
-        super(saldo, agencia, numeroConta, cartao);
+                         CartaoCredito cartao, Cliente cliente, BigDecimal limiteDeCreditoPreAprov){
+        super(saldo, agencia, numeroConta, cartao, cliente);
         this.limiteDeCreditoPreAprov = limiteDeCreditoPreAprov;
         this.saldo = saldo.add(limiteDeCreditoPreAprov) ;
     }

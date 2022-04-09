@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public class ContaCorrente extends Conta {
 
-    public ContaCorrente(BigDecimal saldo , String agencia, String numeroConta, CartaoCredito cartao ) {
-        super(saldo,agencia,numeroConta,cartao);
+    public ContaCorrente(BigDecimal saldo , String agencia, String numeroConta, CartaoCredito cartao, Cliente cliente) {
+        super(saldo,agencia,numeroConta,cartao, cliente);
         this.saldo = saldo;
     }
 
