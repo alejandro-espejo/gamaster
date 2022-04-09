@@ -1,22 +1,23 @@
 package br.edu.gama.gamaster.model;
 
+import java.math.BigDecimal;
+
 public class ContaCorrente extends Conta {
 
-
-    public ContaCorrente( Double saldo , String agencia, String numeroConta, CartaoCredito cartao ) {
+    public ContaCorrente(BigDecimal saldo , String agencia, String numeroConta, CartaoCredito cartao ) {
         super(saldo,agencia,numeroConta,cartao);
         this.saldo = saldo;
     }
 
     @Override
-    public Double getSaldo() {
+    public BigDecimal getSaldo() {
         return saldo;
     }
 
     @Override
-    public double depositar(double valor) {
-        if((valor != 0.00)&&(valor > 0.00)){
-            saldo+=valor;
+    public BigDecimal depositar(BigDecimal valor) {
+        if(valor.compareTo(BigDecimal.ZERO) > 0){
+            saldo= saldo.add(valor);
         }else {
             System.out.println("Valor invalido");
         }
@@ -24,10 +25,10 @@ public class ContaCorrente extends Conta {
     }
 
     @Override
-    public double sacar(double valor) {
-        if((valor != 0.00)&&(valor > 0.00)){
-            if(valor <= saldo) {
-                saldo-=valor;
+    public BigDecimal sacar(BigDecimal valor) {
+        if(valor.compareTo(BigDecimal.ZERO) > 0){
+            if(valor.compareTo(saldo) < 1) {
+                saldo = saldo.subtract(valor);
             }else {
                 System.out.println("Saldo insuficiente!");
             }

@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public class CartaoCredito {
     private String numero;
     private LocalDate validade;
-    private Integer codigoSeguranca;
+    private String codigoSeguranca;
     private String bandeira;
     private String nomePortador;
 
@@ -25,11 +25,11 @@ public class CartaoCredito {
         this.validade = validade;
     }
 
-    public Integer getCodigoSeguranca() {
+    public String getCodigoSeguranca() {
         return codigoSeguranca;
     }
 
-    public void setCodigoSeguranca(Integer codigoSeguranca) {
+    public void setCodigoSeguranca(String codigoSeguranca) {
         this.codigoSeguranca = codigoSeguranca;
     }
 

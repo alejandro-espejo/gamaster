@@ -1,12 +1,14 @@
 package br.edu.gama.gamaster.model;
 
+import java.math.BigDecimal;
+
 public abstract class  Conta {
-    protected Double saldo;
+    protected BigDecimal saldo;
     private String agencia;
     private String numeroConta;
     private CartaoCredito cartao;
 
-    public abstract Double getSaldo();
+    public abstract BigDecimal getSaldo();
 
     public String getAgencia() {
         return agencia;
@@ -20,15 +22,15 @@ public abstract class  Conta {
         return cartao;
     }
 
-    public abstract double depositar(double valor);
-
-    public abstract double sacar(double valor);
-
-    public Conta(Double saldo, String agencia, String numeroConta, CartaoCredito cartao) {
+    public Conta(BigDecimal saldo, String agencia, String numeroConta, CartaoCredito cartao) {
         super();
         this.saldo = saldo;
         this.agencia = agencia;
         this.numeroConta = numeroConta;
         this.cartao = cartao;
     }
+
+    public abstract BigDecimal depositar(BigDecimal valor);
+
+    public abstract BigDecimal sacar(BigDecimal valor);
 }

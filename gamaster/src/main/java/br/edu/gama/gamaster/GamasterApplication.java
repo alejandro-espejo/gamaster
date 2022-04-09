@@ -1,5 +1,7 @@
 package br.edu.gama.gamaster;
 
+import br.edu.gama.gamaster.model.Conta;
+import br.edu.gama.gamaster.model.ContaCorrente;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -7,7 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class GamasterApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(GamasterApplication.class, args);
+		//Comentado para o Spring não tentar fazer a conexão com o banco por enquanto
+//		SpringApplication.run(GamasterApplication.class, args);
 	}
 
 }
