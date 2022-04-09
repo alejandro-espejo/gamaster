@@ -14,8 +14,6 @@ public class Movimentacao {
 	private Conta contaOrigem;
 	private Conta contaDestino;
 
-	
-
 	public Movimentacao(UUID id, TipoMovimentacao tipoMovimentacao, LocalDateTime dataMovimentacao, BigDecimal valor,
 			Conta contaOrigem, Conta contaDestino) {
 		this.id = id;
@@ -73,7 +71,7 @@ public class Movimentacao {
 	public void setContaDestino(Conta contaDestino) {
 		this.contaDestino = contaDestino;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
