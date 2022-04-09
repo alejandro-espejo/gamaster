@@ -8,8 +8,6 @@ public class GamasterApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(GamasterApplication.class, args);
-
-		System.out.println("ola");
 	}
 
 }
