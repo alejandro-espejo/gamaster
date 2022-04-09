@@ -69,44 +69,53 @@ public class GamasterApplication {
     }
 
     public static void acessarConta(){
-        System.out.println("======== GAMASTER BANKING ========");
+        System.out.println("\n\n\n======== GAMASTER BANKING ========");
         System.out.print("Digite o CPF/CNPJ para acessar a conta: ");
         Scanner sc = new Scanner(System.in);
         String cpfCnpj = sc.nextLine();
         Conta conta = buscarConta(cpfCnpj);
 
 //        main(new String[]{"2"});
+        
+        if(conta != null) {
+        	Boolean usuarioLogado = true;
+        	while(usuarioLogado) {
+        		System.out.println("[1] - Consultar Saldo\n" +
+                        "[2] - Consultar Extrato\n" +
+                        "[3] - Realizar Depósito\n" +
+                        "[4] - Realizar Saque\n" +
+                        "[5] - Realizar Tranferência\n" +
+                        "[6] - Sair");
+                System.out.print("\nDigite a opção desejada: ");
+                int opcao = sc.nextInt();
 
-        System.out.println("[1] - Consultar Saldo\n" +
-                "[2] - Consultar Extrato\n" +
-                "[3] - Realizar Depósito\n" +
-                "[4] - Realizar Saque\n" +
-                "[5] - Realizar Tranferência");
-        System.out.print("\nDigite a opção desejada: ");
-        int opcao = sc.nextInt();
-
-        switch (opcao) {
-            case 1:
-                System.out.printf("Saldo da Conta: R$ %.2f%n",GerenciaContas.consultarSaldo(conta));
-                break;
-            case 2:
-                List<Movimentacao> movimentacoes = GerenciaContas.consultarExtrato(conta);
-                movimentacoes.forEach(System.out::println);
-                break;
-            case 3:
-                System.out.print("Digite o valor a ser depositado: ");
-                GerenciaContas.inserir(conta, sc.nextBigDecimal());
-                break;
-            case 4:
-                acessarConta();
-                break;
-            case 5:
-                acessarConta();
-                break;
-            default:
-                break;
-        }
-        acessarConta();
+                switch (opcao) {
+                    case 1:
+                        System.out.printf("Saldo da Conta: R$ %.2f%n",GerenciaContas.consultarSaldo(conta));
+                        break;
+                    case 2:
+                        List<Movimentacao> movimentacoes = GerenciaContas.consultarExtrato(conta);
+                        movimentacoes.forEach(System.out::println);
+                        break;
+                    case 3:
+                        System.out.print("Digite o valor a ser depositado: ");
+                        GerenciaContas.inserir(conta, sc.nextBigDecimal());
+                        break;
+                    case 4:
+                        acessarConta();
+                        break;
+                    case 5:
+                        acessarConta();
+                        break;
+                    case 6:
+                        usuarioLogado = false;
+                        break;
+                    default:
+                        System.out.println("Opção Inválida!");;
+                }        		
+        	}        	        	
+        }   
+        main(new String[]{"2"});
     }
 
     public static Conta buscarConta(String cpfCnpj){
