@@ -1,6 +1,8 @@
 package br.edu.gama.gamaster.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Conta {
 	protected BigDecimal saldo;
@@ -8,6 +10,7 @@ public abstract class Conta {
 	private String numeroConta;
 	private CartaoCredito cartao;
 	private Cliente cliente;
+	private List<Movimentacao> movimentacoes = new ArrayList<>();
 
 	public abstract BigDecimal getSaldo();
 
@@ -27,6 +30,14 @@ public abstract class Conta {
 		return cliente;
 	}
 
+	public List<Movimentacao> getMovimentacoes() {
+		return movimentacoes;
+	}
+
+	public void setMovimentacoes(List<Movimentacao> movimentacoes) {
+		this.movimentacoes = movimentacoes;
+	}
+
 	public Conta(BigDecimal saldo, String agencia, String numeroConta, CartaoCredito cartao, Cliente cliente) {
 		super();
 		this.saldo = saldo;
@@ -39,4 +50,6 @@ public abstract class Conta {
 	public abstract BigDecimal depositar(BigDecimal valor);
 
 	public abstract BigDecimal sacar(BigDecimal valor);
+	
+	
 }

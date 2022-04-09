@@ -1,6 +1,8 @@
 package br.edu.gama.gamaster.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class ContaCorrente extends Conta {
 
@@ -15,9 +17,12 @@ public class ContaCorrente extends Conta {
     }
 
     @Override
-    public BigDecimal depositar(BigDecimal valor) {
+    public BigDecimal depositar(BigDecimal valor ) {
         if(valor.compareTo(BigDecimal.ZERO) > 0){
             saldo= saldo.add(valor);
+            Movimentacao movimentacao = new Movimentacao(UUID.randomUUID(), TipoMovimentacao.ENTRADA, 
+            		LocalDateTime.now(), valor, this, null);
+            getMovimentacoes().add(movimentacao);
         }else {
             System.out.println("Valor invalido");
         }
@@ -29,6 +34,9 @@ public class ContaCorrente extends Conta {
         if(valor.compareTo(BigDecimal.ZERO) > 0){
             if(valor.compareTo(saldo) < 1) {
                 saldo = saldo.subtract(valor);
+                Movimentacao movimentacao = new Movimentacao(UUID.randomUUID(), TipoMovimentacao.SAIDA, 
+                		LocalDateTime.now(), valor, this, null);
+                getMovimentacoes().add(movimentacao);
             }else {
                 System.out.println("Saldo insuficiente!");
             }
