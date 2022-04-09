@@ -9,6 +9,18 @@ public class Cliente {
 	private String cnpjCpf;
 	private String telefone;
 
+	public Cliente() {
+		super();
+	}
+
+	public Cliente(Long codigo, String nome, String cnpjCpf, String telefone) {
+		super();
+		this.codigo = codigo;
+		this.nome = nome;
+		this.cnpjCpf = cnpjCpf;
+		this.telefone = telefone;
+	}
+
 	public Long getCodigo() {
 		return codigo;
 	}
