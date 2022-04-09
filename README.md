@@ -133,9 +133,9 @@ Antes de rodar a aplicação verifique se o arquivo application.properties está
   Testes para validar o funcionamento corretos dos métodos nas classes de repository e service foram criados e podem ser encontrados em `src/test/java/br.com.bloodblue.bluebank`
     
 ## Membros
-  - Isaque Silva.
-  - Wesley Fernandes.
-  - Thiago Gomes.
+  - Isaque Silva
+  - Wesley Fernandes
+  - Thiago Gomes
   - Eliton Oliveira
   - Viviane Viana Bresolin
 
