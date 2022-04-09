@@ -76,4 +76,16 @@ public class Movimentacao {
 	public int hashCode() {
 		return Objects.hash(id);
 	}
+
+	@Override
+	public String toString() {
+		return "Movimentacao{" +
+				"id=" + id +
+				", tipoMovimentacao=" + tipoMovimentacao +
+				", dataMovimentacao=" + dataMovimentacao +
+				", valor=" + valor +
+				", contaOrigem=" + contaOrigem +
+				", contaDestino=" + contaDestino +
+				'}';
+	}
 }
