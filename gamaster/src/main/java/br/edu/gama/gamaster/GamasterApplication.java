@@ -17,11 +17,10 @@ public class GamasterApplication {
         // Comentado para o Spring não tentar fazer a conexão com o banco por enquanto
 //		SpringApplication.run(GamasterApplication.class, args);
 
-        inicia();
-
+        iniciar();
     }
 
-    public static void inicia(){
+    public static void iniciar() {
         System.out.println("======== GAMASTER BANKING ========");
         System.out.println("[1] - Criar Conta\n" +
                 "[2] - Acessar Conta");
@@ -41,7 +40,7 @@ public class GamasterApplication {
         }
     }
 
-    public static void criarConta(){
+    public static void criarConta() {
         Scanner sc = new Scanner(System.in);
         Cliente cliente = new Cliente();
         Conta conta = null;
@@ -53,34 +52,29 @@ public class GamasterApplication {
         System.out.print("DIGITE O TELEFONE DO CLIENTE:");
         cliente.setTelefone(sc.nextLine());
 
-        if(cliente.getCnpjCpf().length() == 14){
+        if (cliente.getCnpjCpf().length() == 14) {
             conta = new ContaEspecial(BigDecimal.ZERO, AGENCIA, UUID.randomUUID().toString(),
                     new CartaoCredito(), cliente, BigDecimal.valueOf(10000));
-        }else{
+        } else {
             conta = new ContaCorrente(BigDecimal.ZERO, AGENCIA, UUID.randomUUID().toString(),
                     new CartaoCredito(), cliente);
         }
-        //testes de saldo
-        conta.depositar(BigDecimal.valueOf(10123));
 
         contaList.add(conta);
-        main(new String[]{"2"});
-
+        iniciar();
     }
 
-    public static void acessarConta(){
+    public static void acessarConta() {
         System.out.println("\n\n\n======== GAMASTER BANKING ========");
         System.out.print("Digite o CPF/CNPJ para acessar a conta: ");
         Scanner sc = new Scanner(System.in);
         String cpfCnpj = sc.nextLine();
         Conta conta = buscarConta(cpfCnpj);
 
-//        main(new String[]{"2"});
-        
-        if(conta != null) {
-        	Boolean usuarioLogado = true;
-        	while(usuarioLogado) {
-        		System.out.println("[1] - Consultar Saldo\n" +
+        if (conta != null) {
+            Boolean usuarioLogado = true;
+            while (usuarioLogado) {
+                System.out.println("[1] - Consultar Saldo\n" +
                         "[2] - Consultar Extrato\n" +
                         "[3] - Realizar Depósito\n" +
                         "[4] - Realizar Saque\n" +
@@ -91,7 +85,7 @@ public class GamasterApplication {
 
                 switch (opcao) {
                     case 1:
-                        System.out.printf("Saldo da Conta: R$ %.2f%n",GerenciaContas.consultarSaldo(conta));
+                        System.out.printf("Saldo da Conta: R$ %.2f%n", GerenciaContas.consultarSaldo(conta));
                         break;
                     case 2:
                         List<Movimentacao> movimentacoes = GerenciaContas.consultarExtrato(conta);
@@ -102,26 +96,28 @@ public class GamasterApplication {
                         GerenciaContas.inserir(conta, sc.nextBigDecimal());
                         break;
                     case 4:
+                        //TODO Implementar Saque
                         acessarConta();
                         break;
                     case 5:
+                        //TODO Implementar Transferência
                         acessarConta();
                         break;
                     case 6:
                         usuarioLogado = false;
                         break;
                     default:
-                        System.out.println("Opção Inválida!");;
-                }        		
-        	}        	        	
-        }   
-        main(new String[]{"2"});
+                        System.out.println("Opção Inválida!");
+                }
+            }
+        }
+        iniciar();
     }
 
-    public static Conta buscarConta(String cpfCnpj){
-        Optional<Conta> contaEncontrada = contaList.stream().filter((conta)->{
-            return conta.getCliente().getCnpjCpf().equalsIgnoreCase(cpfCnpj);
-        }).distinct().findFirst();
+    public static Conta buscarConta(String cpfCnpj) {
+        Optional<Conta> contaEncontrada = contaList.stream()
+                .filter((conta) -> conta.getCliente().getCnpjCpf().equalsIgnoreCase(cpfCnpj))
+                .distinct().findFirst();
 
         return contaEncontrada.orElse(null);
     }
