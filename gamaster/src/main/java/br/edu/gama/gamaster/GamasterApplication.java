@@ -25,10 +25,10 @@ public class GamasterApplication {
 	public static void main(String[] args) {
 		// Comentado para o Spring não tentar fazer a conexão com o banco por enquanto
 //		SpringApplication.run(GamasterApplication.class, args);
-		inicia();
+		iniciar();
 	}
 
-	public static void inicia() {
+	public static void iniciar() {
 		String opcao = "";
 		Scanner scanner = new Scanner(System.in);
 		while (!opcao.equalsIgnoreCase("3")) {
@@ -57,13 +57,12 @@ public class GamasterApplication {
 	}
 
 	public static void criarConta() {
-		System.out.println("Passou Aqui");
 		Cliente cliente = new Cliente();
 		Conta conta = null;
 
-		cliente.setNome(campoCadastro("DIGITE O NOME DO CLIENTE: "));
-		cliente.setCnpjCpf(campoCadastro("DIGITE O CPF/CNPJ DO CLIENTE: "));
-		cliente.setTelefone(campoCadastro("DIGITE O TELEFONE DO CLIENTE: "));
+		cliente.setNome(campoCadastro("Digite o nome do cliente: "));
+		cliente.setCnpjCpf(campoCadastro("Digite o CPF/CNPJ do cliente: "));
+		cliente.setTelefone(campoCadastro("Digite o telefone do cliente: "));
 
 		if (cliente.getCnpjCpf().length() == 14) {
 			conta = new ContaEspecial(BigDecimal.ZERO, AGENCIA, UUID.randomUUID().toString(), new CartaoCredito(),
@@ -79,56 +78,9 @@ public class GamasterApplication {
 		// main(new String[] { "2" });
 	}
 
-	public static void acessarConta() {
-		Scanner scanner = new Scanner(System.in);
-		String opcao = "";
-		System.out.println("======== GAMASTER BANKING ========");
-		System.out.printf("Digite o CPF/CNPJ para acessar a conta:\n\n");
-		String cpfCnpj = scanner.nextLine();
-		Conta conta = buscarConta(cpfCnpj);
-
-		if (conta == null) {
-			System.out.println("Conta não encontrada!");
-		} else {
-			while (!opcao.equalsIgnoreCase("6")) {
-				System.out.println("[1] - Consultar Saldo\n" + "[2] - Consultar Extrato\n" + "[3] - Realizar Depósito\n"
-						+ "[4] - Realizar Saque\n" + "[5] - Realizar Tranferência\n" + "[6] - Sair da conta");
-				System.out.print("\nDigite a opção desejada: ");
-				opcao = scanner.next();
-
-				switch (opcao) {
-				case "1":
-					System.out.printf("Saldo da Conta: R$ %.2f%n", GerenciaContas.consultarSaldo(conta));
-					break;
-				case "2":
-					List<Movimentacao> movimentacoes = GerenciaContas.consultarExtrato(conta);
-					movimentacoes.forEach(System.out::println);
-					break;
-				case "3":
-					System.out.print("Digite o valor a ser depositado: ");
-					GerenciaContas.inserir(conta, scanner.nextBigDecimal());
-					break;
-				case "4":
-					//acessarConta();
-					break;
-				case "5":
-					//acessarConta();
-					break;
-				case "6":
-					System.out.println("Saindo da conta...\n");
-					break;
-				default:
-					System.out.println("Opção inválida\n");
-					break;
-				}
-			}
-		}
-	}
-
 	public static Conta buscarConta(String cpfCnpj) {
-		Optional<Conta> contaEncontrada = contaList.stream().filter((conta) -> {
-			return conta.getCliente().getCnpjCpf().equalsIgnoreCase(cpfCnpj);
-		}).distinct().findFirst();
+		Optional<Conta> contaEncontrada = contaList.stream()
+				.filter((conta) -> conta.getCliente().getCnpjCpf().equalsIgnoreCase(cpfCnpj)).distinct().findFirst();
 
 		return contaEncontrada.orElse(null);
 	}
@@ -137,12 +89,57 @@ public class GamasterApplication {
 		String campo;
 		Scanner scanner = new Scanner(System.in);
 		while (true) {
-			System.out.println(texto);
+			System.out.printf(texto);
 			campo = scanner.nextLine();
 			if (!campo.isEmpty() && campo != null) {
 				break;
 			}
 		}
 		return campo;
+	}
+
+	public static void acessarConta() {
+		System.out.println("\n\n\n======== GAMASTER BANKING ========");
+		System.out.print("Digite o CPF/CNPJ para acessar a conta: ");
+		Scanner sc = new Scanner(System.in);
+		String cpfCnpj = sc.nextLine();
+		Conta conta = buscarConta(cpfCnpj);
+
+		if (conta != null) {
+			Boolean usuarioLogado = true;
+			while (usuarioLogado) {
+				System.out.println("[1] - Consultar Saldo\n" + "[2] - Consultar Extrato\n" + "[3] - Realizar Depósito\n"
+						+ "[4] - Realizar Saque\n" + "[5] - Realizar Tranferência\n" + "[6] - Sair");
+				System.out.print("\nDigite a opção desejada: ");
+				int opcao = sc.nextInt();
+
+				switch (opcao) {
+				case 1:
+					System.out.printf("Saldo da Conta: R$ %.2f%n", GerenciaContas.consultarSaldo(conta));
+					break;
+				case 2:
+					List<Movimentacao> movimentacoes = GerenciaContas.consultarExtrato(conta);
+					movimentacoes.forEach(System.out::println);
+					break;
+				case 3:
+					System.out.print("Digite o valor a ser depositado: ");
+					GerenciaContas.inserir(conta, sc.nextBigDecimal());
+					break;
+				case 4:
+					// TODO Implementar Saque
+					//acessarConta();
+					break;
+				case 5:
+					// TODO Implementar Transferência
+					//acessarConta();
+					break;
+				case 6:
+					usuarioLogado = false;
+					break;
+				default:
+					System.out.println("Opção Inválida!");
+				}
+			}
+		}
 	}
 }
