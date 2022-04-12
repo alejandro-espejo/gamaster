@@ -36,7 +36,7 @@ public class GamasterApplication {
         while (!opcao.equalsIgnoreCase("3")) {
             System.out.println("======== GAMASTER BANKING ========");
             System.out.println("[1] - Criar Conta\n" + "[2] - Acessar Conta\n" + "[3] - Encerrar");
-            System.out.printf("Digite a opção desejada: ");
+            System.out.print("Digite a opção desejada: ");
 
             opcao = scanner.next();
 
@@ -125,8 +125,8 @@ public class GamasterApplication {
                         GerenciaContas.inserir(conta, sc.nextBigDecimal());
                         break;
                     case 4:
-                        // TODO Implementar Saque
-                        //acessarConta();
+                        System.out.print("Digite o valor a ser sacado: ");
+                        GerenciaContas.remover(conta, sc.nextBigDecimal());
                         break;
                     case 5:
                         // TODO Implementar Transferência
