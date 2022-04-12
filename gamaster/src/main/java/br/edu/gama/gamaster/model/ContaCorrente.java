@@ -11,6 +11,9 @@ public class ContaCorrente extends Conta {
         this.saldo = saldo;
     }
 
+    public ContaCorrente() {
+    }
+
     @Override
     public BigDecimal getSaldo() {
         return saldo;
@@ -20,8 +23,8 @@ public class ContaCorrente extends Conta {
     public BigDecimal depositar(BigDecimal valor ) {
         if(valor.compareTo(BigDecimal.ZERO) > 0){
             saldo= saldo.add(valor);
-            Movimentacao movimentacao = new Movimentacao(UUID.randomUUID(), TipoMovimentacao.ENTRADA, 
-            		LocalDateTime.now(), valor, this, null);
+            Movimentacao movimentacao = new Movimentacao(UUID.randomUUID(), TipoMovimentacao.ENTRADA,
+            		LocalDateTime.now(), valor, this, new ContaCorrente());
             getMovimentacoes().add(movimentacao);
         }else {
             System.out.println("Valor invalido");
@@ -34,8 +37,9 @@ public class ContaCorrente extends Conta {
         if(valor.compareTo(BigDecimal.ZERO) > 0){
             if(valor.compareTo(saldo) < 1) {
                 saldo = saldo.subtract(valor);
-                Movimentacao movimentacao = new Movimentacao(UUID.randomUUID(), TipoMovimentacao.SAIDA, 
-                		LocalDateTime.now(), valor, this, null);
+                Movimentacao movimentacao = new Movimentacao(UUID.randomUUID(), TipoMovimentacao.SAIDA,
+                        LocalDateTime.now(), valor, this, new ContaCorrente() {
+                });
                 getMovimentacoes().add(movimentacao);
             }else {
                 System.out.println("Saldo insuficiente!");

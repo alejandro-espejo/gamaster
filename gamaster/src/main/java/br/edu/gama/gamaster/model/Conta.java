@@ -7,7 +7,7 @@ import java.util.List;
 public abstract class Conta {
 	protected BigDecimal saldo;
 	private String agencia;
-	private String numeroConta;
+	private String numeroConta = "-";
 	private CartaoCredito cartao;
 	private Cliente cliente;
 	private List<Movimentacao> movimentacoes = new ArrayList<>();
@@ -45,6 +45,9 @@ public abstract class Conta {
 		this.numeroConta = numeroConta;
 		this.cartao = cartao;
 		this.cliente = cliente;
+	}
+
+	public Conta() {
 	}
 
 	public abstract BigDecimal depositar(BigDecimal valor);
