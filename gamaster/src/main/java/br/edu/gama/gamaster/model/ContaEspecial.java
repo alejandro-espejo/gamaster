@@ -21,6 +21,9 @@ public class ContaEspecial extends Conta {
 		this.saldo = saldo.add(limiteDeCreditoPreAprov);
 	}
 
+	public ContaEspecial() {
+	}
+
 	@Override
 	public BigDecimal getSaldo() {
 		return saldo;
