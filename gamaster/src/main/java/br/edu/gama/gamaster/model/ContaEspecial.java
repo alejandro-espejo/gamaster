@@ -1,24 +1,26 @@
 package br.edu.gama.gamaster.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class ContaEspecial extends Conta {
 
-	private BigDecimal limiteDeCreditoPreAprov;
+	private BigDecimal limiteDeCreditoPreAprovado;
 
-	public BigDecimal getLimiteDeCreditoPreAprov() {
-		return limiteDeCreditoPreAprov;
+	public BigDecimal getLimiteDeCreditoPreAprovado() {
+		return limiteDeCreditoPreAprovado;
 	}
 
-	public void setLimiteDeCreditoPreAprov(BigDecimal limiteDeCreditoPreAprov) {
-		this.limiteDeCreditoPreAprov = limiteDeCreditoPreAprov;
+	public void setLimiteDeCreditoPreAprovado(BigDecimal limiteDeCreditoPreAprovado) {
+		this.limiteDeCreditoPreAprovado = limiteDeCreditoPreAprovado;
 	}
 
 	public ContaEspecial(BigDecimal saldo, String agencia, String numeroConta, CartaoCredito cartao, Cliente cliente,
-			BigDecimal limiteDeCreditoPreAprov) {
+			BigDecimal limiteDeCreditoPreAprovado) {
 		super(saldo, agencia, numeroConta, cartao, cliente);
-		this.limiteDeCreditoPreAprov = limiteDeCreditoPreAprov;
-		this.saldo = saldo.add(limiteDeCreditoPreAprov);
+		this.limiteDeCreditoPreAprovado = limiteDeCreditoPreAprovado;
+		this.saldo = saldo.add(limiteDeCreditoPreAprovado);
 	}
 
 	public ContaEspecial() {
@@ -44,6 +46,10 @@ public class ContaEspecial extends Conta {
 		if (valor.compareTo(BigDecimal.ZERO) > 0) {
 			if (valor.compareTo(saldo) <= 0) {
 				saldo = saldo.subtract(valor);
+				Movimentacao movimentacao = new Movimentacao(UUID.randomUUID(), TipoMovimentacao.SAIDA,
+						LocalDateTime.now(), valor, this, new ContaCorrente() {
+				});
+				getMovimentacoes().add(movimentacao);
 			} else {
 				System.out.println("Saldo insuficiente!");
 			}
