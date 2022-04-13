@@ -24,4 +24,8 @@ public class GerenciaContas {
 		return conta.getMovimentacoes();
 	}
 	
+	public static void transferir(Conta conta, Conta contaDestino, BigDecimal valor) {
+		conta.transferir(contaDestino, valor);
+	}
+	
 }
