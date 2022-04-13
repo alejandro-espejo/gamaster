@@ -25,6 +25,24 @@ public class ContaEspecial extends Conta {
 
 	public ContaEspecial() {
 	}
+	
+	@Override
+    public void transferir(Conta contaDestino, BigDecimal valor) {
+    	if(valor.compareTo(BigDecimal.ZERO) > 0){
+            if(valor.compareTo(saldo) < 1) {
+                this.sacar(valor);
+                contaDestino.depositar(valor);
+                Movimentacao movimentacao = new Movimentacao(UUID.randomUUID(), TipoMovimentacao.TRANSFERENCIA,
+                        LocalDateTime.now(), valor, this, contaDestino);
+                getMovimentacoes().add(movimentacao);
+                
+            }else {
+                System.out.println("Saldo insuficiente!");
+            }
+        }else {
+            System.out.println("Valor invalido");
+        }
+    }
 
 	@Override
 	public BigDecimal getSaldo() {

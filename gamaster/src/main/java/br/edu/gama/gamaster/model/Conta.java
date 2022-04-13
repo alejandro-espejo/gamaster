@@ -54,5 +54,7 @@ public abstract class Conta {
 
 	public abstract BigDecimal sacar(BigDecimal valor);
 	
+	public abstract void transferir(Conta contaDestino, BigDecimal valor);
+	
 	
 }

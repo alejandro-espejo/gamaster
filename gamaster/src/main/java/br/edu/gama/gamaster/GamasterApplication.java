@@ -96,7 +96,7 @@ public class GamasterApplication {
         }
         return campo;
     }
-
+    
     public static void acessarConta() {
         System.out.println("\n\n\n======== GAMASTER BANKING ========");
         System.out.print("Digite o CPF/CNPJ para acessar a conta: ");
@@ -129,8 +129,13 @@ public class GamasterApplication {
                         GerenciaContas.remover(conta, sc.nextBigDecimal());
                         break;
                     case 5:
-                        // TODO Implementar Transferência
-                        //acessarConta();
+                    	System.out.print("Digite a chave pix da conta a ser creditada: ");
+                        Conta contaDestino = buscarConta(sc.next());
+                        if (contaDestino == null) {
+                        	System.out.println("Erro: Conta não encontrada");
+                        	break;
+                        }
+                        GerenciaContas.transferir(conta, contaDestino, sc.nextBigDecimal());
                         break;
                     case 6:
                         usuarioLogado = false;
