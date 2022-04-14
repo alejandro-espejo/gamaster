@@ -103,6 +103,7 @@ public class GamasterApplication {
         Scanner sc = new Scanner(System.in);
         String cpfCnpj = sc.nextLine();
         Conta conta = buscarConta(cpfCnpj);
+        System.out.printf("%nSeja bem-vindo à sua conta %s%n", conta.getCliente().getNome());
 
         if (conta != null) {
             Boolean usuarioLogado = true;
@@ -117,8 +118,7 @@ public class GamasterApplication {
                         System.out.printf("Saldo da Conta: R$ %.2f%n", GerenciaContas.consultarSaldo(conta));
                         break;
                     case 2:
-                        List<Movimentacao> movimentacoes = GerenciaContas.consultarExtrato(conta);
-                        imprimirExtrato(movimentacoes);
+                        GerenciaContas.consultarExtrato(conta);
                         break;
                     case 3:
                         System.out.print("Digite o valor a ser depositado: ");
@@ -135,6 +135,7 @@ public class GamasterApplication {
                         	System.out.println("Erro: Conta não encontrada");
                         	break;
                         }
+                        System.out.printf("Digite o valor a ser transferido para %s: ", contaDestino.getCliente().getNome());
                         GerenciaContas.transferir(conta, contaDestino, sc.nextBigDecimal());
                         break;
                     case 6:
@@ -147,19 +148,7 @@ public class GamasterApplication {
         }
     }
 
-    public static void imprimirExtrato(List<Movimentacao> movimentacoes) {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter
-                .ofPattern("yyyy-MM-dd HH:mm:ss")
-                .withZone(ZoneId.of("GMT-3"));
-
-        System.out.println("===== EXTRATO DA CONTA =====");
-        System.out.format("%-25s %-10s %-20s %-10s %-10s %n", "Data da Mov.", "Tipo", "Valor", "Origem", "Destino");
-        for (Movimentacao mov : movimentacoes) {
-            System.out.format("%-25s %-10s R$ %-20.2f %-10s %-10s %n",
-                    dateTimeFormatter.format(mov.getDataMovimentacao()), mov.getTipoMovimentacao()
-                    , mov.getValor(), mov.getContaOrigem().getNumeroConta()
-                    , mov.getContaDestino().getNumeroConta());
-        }
+    public static void imprimirExtrato(List<Movimentacao> movimentacoes, Conta conta) {
     }
 
 }
