@@ -135,8 +135,12 @@ public class GamasterApplication {
                         	System.out.println("Erro: Conta não encontrada");
                         	break;
                         }
-                        System.out.printf("Digite o valor a ser transferido para %s: ", contaDestino.getCliente().getNome());
-                        GerenciaContas.transferir(conta, contaDestino, sc.nextBigDecimal());
+                        if(conta.getNumeroConta().equals(contaDestino.getNumeroConta())) {
+                        	System.out.println("Operação inválida, Conta de destino é a mesmas de Origem!");
+                        }else {
+                        	System.out.printf("Digite o valor a ser transferido para %s: ", contaDestino.getCliente().getNome());
+                        	GerenciaContas.transferir(conta, contaDestino, sc.nextBigDecimal());
+                        }                          
                         break;
                     case 6:
                         usuarioLogado = false;
