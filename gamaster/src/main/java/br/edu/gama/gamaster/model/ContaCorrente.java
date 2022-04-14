@@ -23,12 +23,8 @@ public class ContaCorrente extends Conta {
     public void transferir(Conta contaDestino, BigDecimal valor) {
     	if(valor.compareTo(BigDecimal.ZERO) > 0){
             if(valor.compareTo(saldo) < 1) {
-                this.sacar(valor);
-                contaDestino.depositar(valor);
-                Movimentacao movimentacao = new Movimentacao(UUID.randomUUID(), TipoMovimentacao.TRANSFERENCIA,
-                        LocalDateTime.now(), valor, this, contaDestino);
-                getMovimentacoes().add(movimentacao);
-                
+                this.sacar(valor, contaDestino);
+                contaDestino.depositar(valor, this);
             }else {
                 System.out.println("Saldo insuficiente!");
             }
@@ -38,11 +34,11 @@ public class ContaCorrente extends Conta {
     }
 
     @Override
-    public BigDecimal depositar(BigDecimal valor ) {
+    public BigDecimal depositar(BigDecimal valor, Conta contaOrigem ) {
         if(valor.compareTo(BigDecimal.ZERO) > 0){
             saldo= saldo.add(valor);
             Movimentacao movimentacao = new Movimentacao(UUID.randomUUID(), TipoMovimentacao.ENTRADA,
-            		LocalDateTime.now(), valor, this, new ContaCorrente());
+            		LocalDateTime.now(), valor, contaOrigem, this);
             getMovimentacoes().add(movimentacao);
         }else {
             System.out.println("Valor invalido");
@@ -51,13 +47,12 @@ public class ContaCorrente extends Conta {
     }
 
     @Override
-    public BigDecimal sacar(BigDecimal valor) {
+    public BigDecimal sacar(BigDecimal valor, Conta contaDestino) {
         if(valor.compareTo(BigDecimal.ZERO) > 0){
             if(valor.compareTo(saldo) < 1) {
                 saldo = saldo.subtract(valor);
                 Movimentacao movimentacao = new Movimentacao(UUID.randomUUID(), TipoMovimentacao.SAIDA,
-                        LocalDateTime.now(), valor, this, new ContaCorrente() {
-                });
+                        LocalDateTime.now(), valor, this, contaDestino);
                 getMovimentacoes().add(movimentacao);
             }else {
                 System.out.println("Saldo insuficiente!");

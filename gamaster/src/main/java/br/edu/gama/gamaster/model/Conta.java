@@ -7,7 +7,7 @@ import java.util.List;
 public abstract class Conta {
 	protected BigDecimal saldo;
 	private String agencia;
-	private String numeroConta = "-";
+	private String numeroConta;
 	private CartaoCredito cartao;
 	private Cliente cliente;
 	private List<Movimentacao> movimentacoes = new ArrayList<>();
@@ -50,9 +50,9 @@ public abstract class Conta {
 	public Conta() {
 	}
 
-	public abstract BigDecimal depositar(BigDecimal valor);
+	public abstract BigDecimal depositar(BigDecimal valor, Conta contaOrigem);
 
-	public abstract BigDecimal sacar(BigDecimal valor);
+	public abstract BigDecimal sacar(BigDecimal valor, Conta contaDestino);
 	
 	public abstract void transferir(Conta contaDestino, BigDecimal valor);
 	
