@@ -67,11 +67,11 @@ public class GamasterApplication {
         cliente.setTelefone(campoCadastro("Digite o telefone do cliente: "));
 
         if (cliente.getCnpjCpf().length() == 14) {
-            conta = new ContaEspecial(BigDecimal.ZERO, AGENCIA, UUID.randomUUID().toString().substring(0,8), new CartaoCredito(),
-                    cliente, BigDecimal.valueOf(10000));
+            conta = new ContaEspecial(BigDecimal.ZERO, AGENCIA, UUID.randomUUID().toString().substring(0,8),
+                    new CartaoCredito(), cliente, BigDecimal.valueOf(10000));
         } else {
-            conta = new ContaCorrente(BigDecimal.ZERO, AGENCIA, UUID.randomUUID().toString().substring(0,8), new CartaoCredito(),
-                    cliente);
+            conta = new ContaCorrente(BigDecimal.ZERO, AGENCIA, UUID.randomUUID().toString().substring(0,8),
+                    new CartaoCredito(), cliente);
         }
         contaList.add(conta);
     }
@@ -98,17 +98,19 @@ public class GamasterApplication {
     }
     
     public static void acessarConta() {
-        System.out.println("\n\n\n======== GAMASTER BANKING ========");
+        System.out.println("\n\n======== GAMASTER BANKING ========");
         System.out.print("Digite o CPF/CNPJ para acessar a conta: ");
         Scanner sc = new Scanner(System.in);
         String cpfCnpj = sc.nextLine();
         Conta conta = buscarConta(cpfCnpj);
-        System.out.printf("%nSeja bem-vindo à sua conta %s%n", conta.getCliente().getNome());
-
-        if (conta != null) {
+        if(conta == null){
+            System.out.println("CONTA NÃO ENCONTRADA!!!");
+            iniciar();
+        }else {
+            System.out.printf("%nSeja bem-vindo à sua conta %s%n", conta.getCliente().getNome());
             Boolean usuarioLogado = true;
             while (usuarioLogado) {
-                System.out.println("[1] - Consultar Saldo\n" + "[2] - Consultar Extrato\n" + "[3] - Realizar Depósito\n"
+                System.out.println("\n======= MENU DA CONTA =======\n[1] - Consultar Saldo\n" + "[2] - Consultar Extrato\n" + "[3] - Realizar Depósito\n"
                         + "[4] - Realizar Saque\n" + "[5] - Realizar Tranferência\n" + "[6] - Sair");
                 System.out.print("\nDigite a opção desejada: ");
                 int opcao = sc.nextInt();
@@ -151,8 +153,4 @@ public class GamasterApplication {
             }
         }
     }
-
-    public static void imprimirExtrato(List<Movimentacao> movimentacoes, Conta conta) {
-    }
-
 }
