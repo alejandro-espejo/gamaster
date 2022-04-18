@@ -55,7 +55,7 @@
 			<artifactId>flyway-core</artifactId>
 		</dependency>
 
-		<!-- Spring Doc -->
+		<!-- Spring Doc -->  
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
