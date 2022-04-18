@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>br.edu.gama</groupId>
 	<artifactId>gamaster</artifactId>
-	<version>0.0.1-SNAPSHOT</version> 
+	<version>0.0.1-SNAPSHOT</version>
 	<name>gamaster</name>
 	<description>Projeto para api de transação bancário</description>
 	<properties>
