@@ -1,7 +1,7 @@
 CREATE TABLE tb_cliente(
 	codigo BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(50) NOT NULL,
-    cpf_cnpj VARCHAR(25) NOT NULL,
+    cpf_cnpj VARCHAR(25) NOT NULL UNIQUE,
     telefone VARCHAR(20) NOT NULL,
     logradouro VARCHAR(50),
     numero VARCHAR(10),
