@@ -1,10 +1,9 @@
 package br.edu.gama.gamaster.model;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Table(name = "tb_conta")
