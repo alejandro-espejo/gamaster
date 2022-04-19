@@ -1,9 +1,13 @@
 package br.edu.gama.gamaster.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Entity
+@Table(name = "tb_conta")
 public class ContaEspecial extends Conta {
 
 	private BigDecimal limiteDeCreditoPreAprovado;
@@ -60,9 +64,9 @@ public class ContaEspecial extends Conta {
 		if (valor.compareTo(BigDecimal.ZERO) > 0) {
 			if (valor.compareTo(saldo) <= 0) {
 				saldo = saldo.subtract(valor);
-				Movimentacao movimentacao = new Movimentacao(UUID.randomUUID(), TipoMovimentacao.SAIDA,
-						LocalDateTime.now(), valor, this, contaDestino);
-				getMovimentacoes().add(movimentacao);
+//				Movimentacao movimentacao = new Movimentacao(UUID.randomUUID(), TipoMovimentacao.SAIDA,
+//						LocalDateTime.now(), valor, this, contaDestino);
+//				getMovimentacoes().add(movimentacao);
 			} else {
 				System.out.println("Saldo insuficiente!");
 			}
