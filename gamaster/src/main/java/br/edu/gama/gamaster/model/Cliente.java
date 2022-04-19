@@ -1,5 +1,7 @@
 package br.edu.gama.gamaster.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -19,7 +21,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class Cliente {
+public class Cliente implements Serializable{
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
