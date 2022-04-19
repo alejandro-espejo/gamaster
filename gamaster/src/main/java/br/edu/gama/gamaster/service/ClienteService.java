@@ -16,20 +16,24 @@ public class ClienteService {
 
 	@Autowired
 	private ClienteRepository clienteRepository;
-	
-	public List<Cliente> buscarTodos(){
+
+	public List<Cliente> buscarTodos() {
 		return clienteRepository.findAll();
 	}
-	
+
 	public Cliente buscarPorCodigo(Long codigo) {
 		Cliente cliente = buscarClientePeloCodigo(codigo);
 		return cliente;
 	}
-	
+
 	public Cliente atualizarCliente(Long codigo, Cliente cliente) {
 		Cliente clienteSalvo = buscarClientePeloCodigo(codigo);
 		BeanUtils.copyProperties(cliente, clienteSalvo, "codigo");
 		return clienteRepository.save(clienteSalvo);
+	}
+
+	public Cliente salvarCliente(Cliente cliente) {
+		return clienteRepository.save(cliente);
 	}
 
 	private Cliente buscarClientePeloCodigo(Long codigo) {
@@ -39,4 +43,5 @@ public class ClienteService {
 		}
 		return cliente.get();
 	}
+
 }

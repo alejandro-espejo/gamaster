@@ -23,11 +23,8 @@ import br.edu.gama.gamaster.repository.ClienteRepository;
 import br.edu.gama.gamaster.service.ClienteService;
 
 @RestController
-@RequestMapping("/Clientes")
+@RequestMapping("/clientes")
 public class ClienteController {
-
-	@Autowired
-	private ClienteRepository clienteRepository;
 
 	@Autowired
 	private ClienteService clienteService;
@@ -49,7 +46,7 @@ public class ClienteController {
 
 	@PostMapping
 	public ResponseEntity<Cliente> cadastrar(@Valid @RequestBody Cliente cliente, HttpServletResponse response) {
-		Cliente clienteSalvo = clienteRepository.save(cliente);
+		Cliente clienteSalvo = clienteService.salvarCliente(cliente);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, clienteSalvo.getCodigo()));
 		return ResponseEntity.status(HttpStatus.CREATED).body(clienteSalvo);
 	}

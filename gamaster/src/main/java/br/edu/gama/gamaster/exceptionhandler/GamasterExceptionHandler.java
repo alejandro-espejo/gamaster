@@ -1,4 +1,4 @@
-package br.edu.gama.gamaster.exceptonhandler;
+package br.edu.gama.gamaster.exceptionhandler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
