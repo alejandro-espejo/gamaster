@@ -1,14 +1,11 @@
 package br.edu.gama.gamaster.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@MappedSuperclass
 public abstract class Conta {
 
 	@Id
@@ -18,9 +15,9 @@ public abstract class Conta {
 	protected BigDecimal saldo;
 	private String agencia;
 	private String numeroConta;
-	private CartaoCredito cartao;
-	private Cliente cliente;
-	private List<Movimentacao> movimentacoes = new ArrayList<>();
+//	private CartaoCredito cartao;
+//	private Cliente cliente;
+//	private List<Movimentacao> movimentacoes = new ArrayList<>();
 
 	public abstract BigDecimal getSaldo();
 
@@ -32,29 +29,27 @@ public abstract class Conta {
 		return numeroConta;
 	}
 
-	public CartaoCredito getCartao() {
-		return cartao;
-	}
+//	public CartaoCredito getCartao() {
+//		return cartao;
+//	}
+//
+//	public Cliente getCliente() {
+//		return cliente;
+//	}
 
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public List<Movimentacao> getMovimentacoes() {
-		return movimentacoes;
-	}
-
-	public void setMovimentacoes(List<Movimentacao> movimentacoes) {
-		this.movimentacoes = movimentacoes;
-	}
+//	public List<Movimentacao> getMovimentacoes() {
+//		return movimentacoes;
+//	}
+//
+//	public void setMovimentacoes(List<Movimentacao> movimentacoes) {
+//		this.movimentacoes = movimentacoes;
+//	}
 
 	public Conta(BigDecimal saldo, String agencia, String numeroConta, CartaoCredito cartao, Cliente cliente) {
 		super();
 		this.saldo = saldo;
 		this.agencia = agencia;
 		this.numeroConta = numeroConta;
-		this.cartao = cartao;
-		this.cliente = cliente;
 	}
 
 	public Conta() {
