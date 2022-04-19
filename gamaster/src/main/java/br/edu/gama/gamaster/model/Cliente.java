@@ -37,7 +37,7 @@ public class Cliente implements Serializable{
 	@NotBlank
 	@Column(name = "cpf_cnpj")
 	@Size(max = 25)
-	private String cnpjCpf;
+	private String cpfCnpj;
 	
 	@NotBlank
 	@Column(name = "telefone")

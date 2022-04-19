@@ -39,5 +39,5 @@ public class Endereco {
 	@Column(name = "estado")
 	@Size(max = 2)
 	private String estado;
-
+	
 }
