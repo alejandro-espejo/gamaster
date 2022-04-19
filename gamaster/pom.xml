@@ -49,11 +49,11 @@
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 		
-		<!-- Migrações - Flyway 
+		<!-- Migrações - Flyway -->
 		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
-		</dependency> -->
+		</dependency> 
 
 		<!-- Spring Doc -->  
 		<dependency>

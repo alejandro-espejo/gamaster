@@ -2,6 +2,7 @@ package br.edu.gama.gamaster.model;
 
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,16 +18,22 @@ public class Cliente {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "codigo")
 	private Long codigo;
 	
 	@NotBlank
 	@Size(min = 3, max = 50)
+	@Column(name = "nome")
 	private String nome;
 	
 	@NotBlank
+	@Column(name = "cpf_cnpj")
+	@Size(max = 25)
 	private String cnpjCpf;
 	
 	@NotBlank
+	@Column(name = "telefone")
+	@Size(max = 20)
 	private String telefone;
 	
 	@Embedded
