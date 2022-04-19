@@ -46,9 +46,9 @@ public class CartaoCreditoController {
 	
 	@PostMapping
 	public ResponseEntity<CartaoCredito> cadastrar(@Valid @RequestBody CartaoCredito cartaoCredito, HttpServletResponse response) {
-		CartaoCredito clienteSalvo = cartaoCreditoService.salvarCartao(cartaoCredito);
-		publisher.publishEvent(new RecursoCriadoEvent(this, response, clienteSalvo.getCodigo()));
-		return ResponseEntity.status(HttpStatus.CREATED).body(clienteSalvo);
+		CartaoCredito cartaoSalvo = cartaoCreditoService.salvarCartao(cartaoCredito);
+		publisher.publishEvent(new RecursoCriadoEvent(this, response, cartaoSalvo.getCodigo()));
+		return ResponseEntity.status(HttpStatus.CREATED).body(cartaoSalvo);
 	}
 	
 	@PutMapping("/{codigo}")
@@ -58,7 +58,7 @@ public class CartaoCreditoController {
 	}
 	
 	@DeleteMapping("/{codigo}")
-	public ResponseEntity<?> excluir(@PathVariable Long codigo) {
+	public ResponseEntity<Void> excluir(@PathVariable Long codigo) {
 		cartaoCreditoService.excluirCartao(codigo);
 		return ResponseEntity.noContent().build();
 	}
