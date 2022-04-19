@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.gama.gamaster.event.RecursoCriadoEvent;
 import br.edu.gama.gamaster.model.Cliente;
-import br.edu.gama.gamaster.repository.ClienteRepository;
 import br.edu.gama.gamaster.service.ClienteService;
 
 @RestController
