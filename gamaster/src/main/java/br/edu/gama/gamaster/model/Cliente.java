@@ -2,24 +2,35 @@ package br.edu.gama.gamaster.model;
 
 import java.util.Objects;
 
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+@Entity
+@Table(name = "tb_cliente")
 public class Cliente {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
+	
+	@NotBlank
+	@Size(min = 3, max = 50)
 	private String nome;
+	
+	@NotBlank
 	private String cnpjCpf;
+	
+	@NotBlank
 	private String telefone;
-
-	public Cliente() {
-		super();
-	}
-
-	public Cliente(Long codigo, String nome, String cnpjCpf, String telefone) {
-		super();
-		this.codigo = codigo;
-		this.nome = nome;
-		this.cnpjCpf = cnpjCpf;
-		this.telefone = telefone;
-	}
+	
+	@Embedded
+	private Endereco endereco;
 
 	public Long getCodigo() {
 		return codigo;
@@ -56,6 +67,14 @@ public class Cliente {
 	@Override
 	public int hashCode() {
 		return Objects.hash(codigo);
+	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 
 	@Override
