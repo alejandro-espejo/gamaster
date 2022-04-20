@@ -2,11 +2,12 @@ package br.edu.gama.gamaster.model;
 
 import java.math.BigDecimal;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tb_conta")
+@DiscriminatorValue("CE")
 public class ContaEspecial extends Conta {
 
 	private BigDecimal limiteDeCreditoPreAprovado;
@@ -21,7 +22,7 @@ public class ContaEspecial extends Conta {
 
 	public ContaEspecial(BigDecimal saldo, String agencia, String numeroConta, CartaoCredito cartao, Cliente cliente,
 			BigDecimal limiteDeCreditoPreAprovado) {
-		super(saldo, agencia, numeroConta, cartao, cliente);
+		super(saldo, agencia, numeroConta);
 		this.limiteDeCreditoPreAprovado = limiteDeCreditoPreAprovado;
 		this.saldo = saldo.add(limiteDeCreditoPreAprovado);
 	}
