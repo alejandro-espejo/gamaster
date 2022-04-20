@@ -1,8 +1,14 @@
 package br.edu.gama.gamaster.model;
 
+import java.math.BigDecimal;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import java.math.BigDecimal;
+
 @Entity
 @DiscriminatorValue("CC")
 public class ContaCorrente extends Conta {

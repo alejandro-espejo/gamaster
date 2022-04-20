@@ -1,64 +1,60 @@
 package br.edu.gama.gamaster.model;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class CartaoCredito {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
+@Entity
+@Table(name = "tb_cartao")
+@Getter
+@Setter
+@EqualsAndHashCode
+public class CartaoCredito implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long codigo;
+	
+	@NotBlank
+	@Column(name = "numero")
     private String numero;
+	
+	@NotNull
+	@Column(name = "validade")
     private LocalDate validade;
+	
+	@NotBlank
+	@Column(name = "cod_seguranca")
     private String codigoSeguranca;
+	
+	@NotBlank
+	@Column(name = "bandeira")
     private String bandeira;
+	
+	@NotBlank
+	@Column(name = "portador")
     private String nomePortador;
-
-    public String getNumero() {
-        return numero;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
-    public LocalDate getValidade() {
-        return validade;
-    }
-
-    public void setValidade(LocalDate validade) {
-        this.validade = validade;
-    }
-
-    public String getCodigoSeguranca() {
-        return codigoSeguranca;
-    }
-
-    public void setCodigoSeguranca(String codigoSeguranca) {
-        this.codigoSeguranca = codigoSeguranca;
-    }
-
-    public String getBandeira() {
-        return bandeira;
-    }
-
-    public void setBandeira(String bandeira) {
-        this.bandeira = bandeira;
-    }
-
-    public String getNomePortador() {
-        return nomePortador;
-    }
-
-    public void setNomePortador(String nomePortador) {
-        this.nomePortador = nomePortador;
-    }
-
-    @Override
-    public String toString() {
-        return "CartaoCredito{" +
-                "numero='" + numero + '\'' +
-                ", validade=" + validade +
-                ", codigoSeguranca=" + codigoSeguranca +
-                ", bandeira='" + bandeira + '\'' +
-                ", nomePortador='" + nomePortador + '\'' +
-                '}';
-    }
-
+	
+	@NotNull
+	@Column(name = "limite")
+	private BigDecimal limite;
+	
+	@NotNull
+	@Column(name = "limite_disponivel")
+	private BigDecimal limiteDesponivel;
 
 }

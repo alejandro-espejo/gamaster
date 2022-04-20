@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/contas")
 public class ContaController {
-
+  
     @Autowired
     private ContaRepository contaRepository;
 
@@ -20,5 +20,5 @@ public class ContaController {
     public List<Conta> buscarTodas(){
         return contaRepository.findAll();
     }
-
+  
 }
