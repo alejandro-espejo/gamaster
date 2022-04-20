@@ -21,7 +21,7 @@ import lombok.Setter;
 @Table(name = "tb_cartao")
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(of = "codigo")
 public class CartaoCredito implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -53,7 +53,6 @@ public class CartaoCredito implements Serializable {
 	@Column(name = "limite")
 	private BigDecimal limite;
 	
-	@NotNull
 	@Column(name = "limite_disponivel")
 	private BigDecimal limiteDesponivel;
 
