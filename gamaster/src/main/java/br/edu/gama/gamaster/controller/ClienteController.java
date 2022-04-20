@@ -23,7 +23,7 @@ import br.edu.gama.gamaster.repository.ClienteRepository;
 import br.edu.gama.gamaster.service.ClienteService;
 
 @RestController
-@RequestMapping("/Clientes")
+@RequestMapping("/clientes")
 public class ClienteController {
 
 	@Autowired
