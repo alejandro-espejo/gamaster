@@ -20,7 +20,7 @@ import lombok.Setter;
 @Table(name = "tb_cliente")
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(of = "codigo")
 public class Cliente implements Serializable{
 	private static final long serialVersionUID = 1L;
 
