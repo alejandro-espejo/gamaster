@@ -57,6 +57,23 @@ public abstract class Conta {
 	@Column(name = "data_criacao")
 	private LocalDate dataCriacao;
 
+//	private CartaoCredito cartao;
+//	private Cliente cliente;
+
+	@OneToMany(mappedBy = "contaOrigem")
+	private List<Movimentacao> movimentacoesOrigem = new ArrayList<>();
+
+	@OneToMany(mappedBy = "contaDestino")
+	private List<Movimentacao> movimentacoesDestino = new ArrayList<>();
+
+	public Conta(BigDecimal saldo, String agencia, String numeroConta) {
+		this.saldo = saldo;
+		this.agencia = agencia;
+		this.numeroConta = numeroConta;
+	}
+
+	public abstract BigDecimal getSaldo();
+
 	@OneToOne
 	@JoinColumn(name = "cod_cartao")
 	private CartaoCredito cartao;
@@ -65,11 +82,5 @@ public abstract class Conta {
 	@OneToOne
 	@JoinColumn(name = "cod_cliente")
 	private Cliente cliente;
-
-	// @OneToMany(mappedBy = "contaOrigem")
-	// private List<Movimentacao> movimentacoesOrigem = new ArrayList<>();
-
-	// @OneToMany(mappedBy = "contaDestinoId")
-	// private List<Movimentacao> movimentacoesDestino = new ArrayList<>();
 
 }

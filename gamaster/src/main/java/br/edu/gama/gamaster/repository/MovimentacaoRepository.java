@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface MovimentacaoRepository extends JpaRepository<Movimentacao, Long> {
 
-    @Query(nativeQuery = true, value = "select * from tb_movimentacao where conta_destino_id = ?1 or conta_origem_id = ?2")
-    List<Movimentacao> findByContaDestinoOrContaOrigem(Long contaDestino, Long contaOrigem);
+//    @Query(nativeQuery = true, value = "select * from tb_movimentacao where conta_destino_id = ?1 or conta_origem_id = ?2")
+    List<Movimentacao> findByContaDestinoOrContaOrigem(Conta contaDestino, Conta contaOrigem);
 }
