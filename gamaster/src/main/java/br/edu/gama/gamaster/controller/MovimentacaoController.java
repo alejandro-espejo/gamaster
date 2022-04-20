@@ -24,7 +24,7 @@ public class MovimentacaoController {
     @GetMapping("/{idConta}")
     public List<Movimentacao> buscarMovimentacoesPorConta(@PathVariable Long idConta) {
         Conta conta = contaRepository.findById(idConta).get();
-        return movimentacaoRepository.findByContaDestinoOrContaOrigem(idConta, idConta);
+        return movimentacaoRepository.findByContaDestinoOrContaOrigem(conta, conta);
     }
 
 }

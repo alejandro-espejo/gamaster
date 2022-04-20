@@ -26,11 +26,12 @@ public class Movimentacao implements Serializable {
     private LocalDateTime dataMovimentacao;
     private BigDecimal valor;
 
-    @ManyToOne(targetEntity = Conta.class)
-    private Long contaOrigem;
+    @ManyToOne
+    @JoinColumn(name = "conta_origem_id")
+    private Conta contaOrigem;
 
-    @ManyToOne(targetEntity = Conta.class)
+    @ManyToOne
     @JoinColumn(name = "conta_destino_id")
-    private Long contaDestinoId;
+    private Conta contaDestino;
 
 }

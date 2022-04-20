@@ -32,7 +32,7 @@ public abstract class Conta {
 	@OneToMany(mappedBy = "contaOrigem")
 	private List<Movimentacao> movimentacoesOrigem = new ArrayList<>();
 
-	@OneToMany(mappedBy = "contaDestinoId")
+	@OneToMany(mappedBy = "contaDestino")
 	private List<Movimentacao> movimentacoesDestino = new ArrayList<>();
 
 	public Conta(BigDecimal saldo, String agencia, String numeroConta) {
