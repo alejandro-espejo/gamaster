@@ -1,91 +1,36 @@
 package br.edu.gama.gamaster.model;
 
+import br.edu.gama.gamaster.controller.ContaController;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+
+import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Objects;
-import java.util.UUID;
 
-public class Movimentacao {
+@Entity
+@Getter
+@Setter
+@Table(name = "tb_movimentacao")
+public class Movimentacao implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-	private UUID id;
-	private TipoMovimentacao tipoMovimentacao;
-	private LocalDateTime dataMovimentacao;
-	private BigDecimal valor;
-	private Conta contaOrigem;
-	private Conta contaDestino;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private TipoMovimentacao tipoMovimentacao;
 
-	public Movimentacao(UUID id, TipoMovimentacao tipoMovimentacao, LocalDateTime dataMovimentacao, BigDecimal valor,
-			Conta contaOrigem, Conta contaDestino) {
-		this.id = id;
-		this.tipoMovimentacao = tipoMovimentacao;
-		this.dataMovimentacao = dataMovimentacao;
-		this.valor = valor;
-		this.contaOrigem = contaOrigem;
-		this.contaDestino = contaDestino;
-	}
+    @CreationTimestamp
+    private LocalDateTime dataMovimentacao;
+    private BigDecimal valor;
 
-	public UUID getId() {
-		return id;
-	}
+    @ManyToOne(targetEntity = Conta.class)
+    private Long contaOrigem;
 
-	public void setId(UUID id) {
-		this.id = id;
-	}
+    @ManyToOne(targetEntity = Conta.class)
+    @JoinColumn(name = "conta_destino_id")
+    private Long contaDestinoId;
 
-	public TipoMovimentacao getTipoMovimentacao() {
-		return tipoMovimentacao;
-	}
-
-	public void setTipoMovimentacao(TipoMovimentacao tipoMovimentacao) {
-		this.tipoMovimentacao = tipoMovimentacao;
-	}
-
-	public LocalDateTime getDataMovimentacao() {
-		return dataMovimentacao;
-	}
-
-	public void setDataMovimentacao(LocalDateTime dataMovimentacao) {
-		this.dataMovimentacao = dataMovimentacao;
-	}
-
-	public BigDecimal getValor() {
-		return valor;
-	}
-
-	public void setValor(BigDecimal valor) {
-		this.valor = valor;
-	}
-
-	public Conta getContaOrigem() {
-		return contaOrigem;
-	}
-
-	public void setContaOrigem(Conta contaOrigem) {
-		this.contaOrigem = contaOrigem;
-	}
-
-	public Conta getContaDestino() {
-		return contaDestino;
-	}
-
-	public void setContaDestino(Conta contaDestino) {
-		this.contaDestino = contaDestino;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public String toString() {
-		return "Movimentacao{" +
-				"id=" + id +
-				", tipoMovimentacao=" + tipoMovimentacao +
-				", dataMovimentacao=" + dataMovimentacao +
-				", valor=" + valor +
-				", contaOrigem=" + contaOrigem +
-				", contaDestino=" + contaDestino +
-				'}';
-	}
 }

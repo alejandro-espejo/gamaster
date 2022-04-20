@@ -1,20 +1,19 @@
 package br.edu.gama.gamaster.model;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.UUID;
 @Entity
-@Table(name = "tb_conta")
+@DiscriminatorValue("CC")
 public class ContaCorrente extends Conta {
 
-    public ContaCorrente(BigDecimal saldo , String agencia, String numeroConta, CartaoCredito cartao, Cliente cliente) {
-        super(saldo,agencia,numeroConta,cartao, cliente);
+    public ContaCorrente(BigDecimal saldo , String agencia, String numeroConta) {
+        super(saldo,agencia,numeroConta);
         this.saldo = saldo;
     }
 
     public ContaCorrente() {
+        super();
     }
 
     @Override

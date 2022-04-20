@@ -1,11 +1,22 @@
 package br.edu.gama.gamaster.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-@MappedSuperclass
+//@MappedSuperclass
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo_conta")
+@Table(name = "tb_conta")
 public abstract class Conta {
 
 	@Id
@@ -17,7 +28,18 @@ public abstract class Conta {
 	private String numeroConta;
 //	private CartaoCredito cartao;
 //	private Cliente cliente;
-//	private List<Movimentacao> movimentacoes = new ArrayList<>();
+
+	@OneToMany(mappedBy = "contaOrigem")
+	private List<Movimentacao> movimentacoesOrigem = new ArrayList<>();
+
+	@OneToMany(mappedBy = "contaDestinoId")
+	private List<Movimentacao> movimentacoesDestino = new ArrayList<>();
+
+	public Conta(BigDecimal saldo, String agencia, String numeroConta) {
+		this.saldo = saldo;
+		this.agencia = agencia;
+		this.numeroConta = numeroConta;
+	}
 
 	public abstract BigDecimal getSaldo();
 
@@ -27,32 +49,6 @@ public abstract class Conta {
 
 	public String getNumeroConta() {
 		return numeroConta;
-	}
-
-//	public CartaoCredito getCartao() {
-//		return cartao;
-//	}
-//
-//	public Cliente getCliente() {
-//		return cliente;
-//	}
-
-//	public List<Movimentacao> getMovimentacoes() {
-//		return movimentacoes;
-//	}
-//
-//	public void setMovimentacoes(List<Movimentacao> movimentacoes) {
-//		this.movimentacoes = movimentacoes;
-//	}
-
-	public Conta(BigDecimal saldo, String agencia, String numeroConta, CartaoCredito cartao, Cliente cliente) {
-		super();
-		this.saldo = saldo;
-		this.agencia = agencia;
-		this.numeroConta = numeroConta;
-	}
-
-	public Conta() {
 	}
 
 	public abstract BigDecimal depositar(BigDecimal valor, Conta contaOrigem);
