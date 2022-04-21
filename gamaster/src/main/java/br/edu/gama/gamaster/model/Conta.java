@@ -50,9 +50,6 @@ public abstract class Conta {
 	@Column(name = "data_criacao")
 	private LocalDate dataCriacao;
 
-//	private CartaoCredito cartao;
-//	private Cliente cliente;
-
 	@OneToMany(mappedBy = "contaOrigem")
 	@JsonBackReference
 	@ToString.Exclude
@@ -77,8 +74,8 @@ public abstract class Conta {
 	private CartaoCredito cartao;
 
 	@NotNull
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "cod_cliente")
+	@OneToOne
+	@JoinColumn(name = "cod_cliente", nullable = false)
 	private Cliente cliente;
 
 }
