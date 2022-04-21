@@ -1,5 +1,6 @@
 package br.edu.gama.gamaster.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,3 +42,20 @@ public class ContaService {
 		}
 		return conta.get();
 	}
+
+	public void atualizarSaldo(Conta contaOrigem, Conta contaDestino, BigDecimal valor){
+		if (contaOrigem != null) {
+			System.out.println(contaOrigem.getSaldo().toString());
+			contaOrigem.setSaldo(contaOrigem.getSaldo().subtract(valor));
+			System.out.println(contaOrigem.getSaldo().toString());
+			contaRepository.saveAndFlush(contaOrigem);
+		}
+		if (contaDestino != null) {
+			System.out.println(contaDestino.getSaldo().toString());
+			contaDestino.setSaldo(contaDestino.getSaldo().add(valor));
+			System.out.println(contaDestino.getSaldo().toString());
+			contaRepository.saveAndFlush(contaDestino);
+		}
+	}
+
+}

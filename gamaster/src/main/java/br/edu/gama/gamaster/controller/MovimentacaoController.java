@@ -1,15 +1,16 @@
 package br.edu.gama.gamaster.controller;
 
-import br.edu.gama.gamaster.model.Conta;
+import br.edu.gama.gamaster.event.RecursoCriadoEvent;
 import br.edu.gama.gamaster.model.Movimentacao;
-import br.edu.gama.gamaster.repository.ContaRepository;
-import br.edu.gama.gamaster.repository.MovimentacaoRepository;
+import br.edu.gama.gamaster.model.dto.MovimentacaoDto;
+import br.edu.gama.gamaster.service.MovimentacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -17,14 +18,29 @@ import java.util.List;
 public class MovimentacaoController {
 
     @Autowired
-    private MovimentacaoRepository movimentacaoRepository;
-    @Autowired
-    private ContaRepository contaRepository;
+    private MovimentacaoService movimentacaoService;
 
-    @GetMapping("/{idConta}")
-    public List<Movimentacao> buscarMovimentacoesPorConta(@PathVariable Long idConta) {
-        Conta conta = contaRepository.findById(idConta).get();
-        return movimentacaoRepository.findByContaDestinoOrContaOrigem(conta, conta);
+    @Autowired
+    private ApplicationEventPublisher publisher;
+
+    @GetMapping
+    public ResponseEntity<List<Movimentacao>> buscarMovimentacoesPorConta(@RequestParam(name = "codigoConta") Long codigoConta) {
+        List<Movimentacao> movimentacaoList = movimentacaoService.buscarMovimentacaoPorConta(codigoConta);
+        return ResponseEntity.ok(movimentacaoList);
     }
 
+    @GetMapping("/entre-contas")
+    public ResponseEntity<List<Movimentacao>> buscarMovimentacaoEntreContas(
+            @RequestParam(name = "codigoContaOrigem") Long codigoContaOrigem,
+            @RequestParam(name = "codigoContaDestino") Long codigoContaDestino) {
+        List<Movimentacao> movimentacaoList = movimentacaoService.buscarMovimentacaoEntreContas(codigoContaOrigem, codigoContaDestino);
+        return ResponseEntity.ok(movimentacaoList);
+    }
+
+    @PostMapping
+    public ResponseEntity<Movimentacao> cadastrar(@RequestBody MovimentacaoDto movimentacaoDto, HttpServletResponse response) {
+        Movimentacao movimentacaoSalva = movimentacaoService.criarMovimentacao(movimentacaoDto);
+        publisher.publishEvent(new RecursoCriadoEvent(this, response, movimentacaoSalva.getId()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(movimentacaoSalva);
+    }
 }
