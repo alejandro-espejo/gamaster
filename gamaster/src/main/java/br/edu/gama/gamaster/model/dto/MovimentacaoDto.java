@@ -1,5 +1,6 @@
 package br.edu.gama.gamaster.model.dto;
 
+import br.edu.gama.gamaster.model.Conta;
 import br.edu.gama.gamaster.model.Movimentacao;
 import br.edu.gama.gamaster.model.TipoMovimentacao;
 import br.edu.gama.gamaster.service.ContaService;
@@ -24,10 +25,16 @@ public class MovimentacaoDto {
     private Long codigoContaDestino;
 
 
-    public Movimentacao toModel(){
+    public Movimentacao toModel(ContaService contaService){
         Movimentacao movimentacao = new Movimentacao();
         BeanUtils.copyProperties(this, movimentacao, "id");
         movimentacao.setDataMovimentacao(LocalDateTime.now());
+        Conta contaOrigem = this.getCodigoContaOrigem() != null ?
+                contaService.buscarPorCodigo(this.getCodigoContaOrigem()) : null;
+        Conta contaDestino = this.getCodigoContaDestino() != null ?
+                contaService.buscarPorCodigo(this.getCodigoContaDestino()) : null;
+        movimentacao.setContaOrigem(contaOrigem);
+        movimentacao.setContaDestino(contaDestino);
         return movimentacao;
     }
 }

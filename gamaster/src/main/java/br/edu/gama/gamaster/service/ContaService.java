@@ -1,16 +1,18 @@
 package br.edu.gama.gamaster.service;
 
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.stereotype.Service;
-
+import br.edu.gama.gamaster.exceptionhandler.ContaSemSaldoException;
 import br.edu.gama.gamaster.model.Conta;
 import br.edu.gama.gamaster.model.dto.ContaDto;
 import br.edu.gama.gamaster.repository.ContaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ContaService {
@@ -43,17 +45,18 @@ public class ContaService {
 		return conta.get();
 	}
 
-	public void atualizarSaldo(Conta contaOrigem, Conta contaDestino, BigDecimal valor){
+	@Transactional //Incluído para caso haja algum problema não executar nenhum débito nem crédito
+	public void atualizarSaldo(Conta contaOrigem, Conta contaDestino, BigDecimal valor) {
 		if (contaOrigem != null) {
-			System.out.println(contaOrigem.getSaldo().toString());
-			contaOrigem.setSaldo(contaOrigem.getSaldo().subtract(valor));
-			System.out.println(contaOrigem.getSaldo().toString());
+			if (contaOrigem.getSaldo().compareTo(valor) >= 0) {
+				contaOrigem.setSaldo(contaOrigem.getSaldo().subtract(valor));
+			} else {
+				throw new DataIntegrityViolationException(contaOrigem.getCodigo().toString(), new ContaSemSaldoException(contaOrigem.getCodigo()));
+			}
 			contaRepository.saveAndFlush(contaOrigem);
 		}
 		if (contaDestino != null) {
-			System.out.println(contaDestino.getSaldo().toString());
 			contaDestino.setSaldo(contaDestino.getSaldo().add(valor));
-			System.out.println(contaDestino.getSaldo().toString());
 			contaRepository.saveAndFlush(contaDestino);
 		}
 	}
