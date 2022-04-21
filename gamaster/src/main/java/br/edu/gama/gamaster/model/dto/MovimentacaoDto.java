@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class MovimentacaoDto {
 
-    private TipoMovimentacao tipoMovimentacao;
     private BigDecimal valor;
     private Long codigoContaOrigem;
     private Long codigoContaDestino;
@@ -27,14 +26,25 @@ public class MovimentacaoDto {
 
     public Movimentacao toModel(ContaService contaService){
         Movimentacao movimentacao = new Movimentacao();
-        BeanUtils.copyProperties(this, movimentacao, "id");
+        movimentacao.setValor(this.valor);
         movimentacao.setDataMovimentacao(LocalDateTime.now());
-        Conta contaOrigem = this.getCodigoContaOrigem() != null ?
-                contaService.buscarPorCodigo(this.getCodigoContaOrigem()) : null;
-        Conta contaDestino = this.getCodigoContaDestino() != null ?
-                contaService.buscarPorCodigo(this.getCodigoContaDestino()) : null;
+
+        Conta contaOrigem = this.codigoContaOrigem != null ?
+                contaService.buscarPorCodigo(this.codigoContaOrigem) : null;
+        Conta contaDestino = this.codigoContaDestino != null ?
+                contaService.buscarPorCodigo(this.codigoContaDestino) : null;
+
         movimentacao.setContaOrigem(contaOrigem);
         movimentacao.setContaDestino(contaDestino);
+
+        if(contaOrigem == null){
+            movimentacao.setTipoMovimentacao(TipoMovimentacao.ENTRADA);
+        } else if (contaDestino == null) {
+            movimentacao.setTipoMovimentacao(TipoMovimentacao.SAIDA);
+        }else{
+            movimentacao.setTipoMovimentacao(TipoMovimentacao.TRANSFERENCIA);
+        }
+
         return movimentacao;
     }
 }

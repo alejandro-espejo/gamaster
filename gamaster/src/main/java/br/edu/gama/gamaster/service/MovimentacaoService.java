@@ -34,15 +34,11 @@ public class MovimentacaoService {
     }
 
     public List<Movimentacao> buscarSaidasPorConta(Long codigoConta) {
-        Conta conta = contaService.buscarPorCodigo(codigoConta);
-
-        return conta.getMovimentacoesOrigem();
+        return movimentacaoRepository.buscarSaidasPorConta(codigoConta);
     }
 
     public List<Movimentacao> buscarEntradasPorConta(Long codigoConta) {
-        Conta conta = contaService.buscarPorCodigo(codigoConta);
-
-        return conta.getMovimentacoesDestino();
+        return movimentacaoRepository.buscarEntradasPorConta(codigoConta);
     }
 
     public Movimentacao criarMovimentacao(MovimentacaoDto movimentacaoDto) {
