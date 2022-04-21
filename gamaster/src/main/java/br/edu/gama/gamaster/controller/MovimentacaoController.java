@@ -37,6 +37,18 @@ public class MovimentacaoController {
         return ResponseEntity.ok(movimentacaoList);
     }
 
+    @GetMapping("/saidas")
+    public ResponseEntity<List<Movimentacao>> buscarSaidasPorConta(@RequestParam(name = "codigoConta") Long codigoConta) {
+        List<Movimentacao> movimentacaoList = movimentacaoService.buscarSaidasPorConta(codigoConta);
+        return ResponseEntity.ok(movimentacaoList);
+    }
+
+    @GetMapping("/entradas")
+    public ResponseEntity<List<Movimentacao>> buscarEntradasPorConta(@RequestParam(name = "codigoConta") Long codigoConta) {
+        List<Movimentacao> movimentacaoList = movimentacaoService.buscarEntradasPorConta(codigoConta);
+        return ResponseEntity.ok(movimentacaoList);
+    }
+
     @PostMapping
     public ResponseEntity<Movimentacao> cadastrar(@RequestBody MovimentacaoDto movimentacaoDto, HttpServletResponse response) {
         Movimentacao movimentacaoSalva = movimentacaoService.criarMovimentacao(movimentacaoDto);

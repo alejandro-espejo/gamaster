@@ -1,5 +1,6 @@
 package br.edu.gama.gamaster.service;
 
+import br.edu.gama.gamaster.exceptionhandler.ContaSemSaldoException;
 import br.edu.gama.gamaster.model.Conta;
 import br.edu.gama.gamaster.model.Movimentacao;
 import br.edu.gama.gamaster.model.dto.MovimentacaoDto;
@@ -32,15 +33,21 @@ public class MovimentacaoService {
         return movimentacaoRepository.findByContaOrigemAndContaDestino(contaOrigem, contaDestino);
     }
 
+    public List<Movimentacao> buscarSaidasPorConta(Long codigoConta) {
+        Conta conta = contaService.buscarPorCodigo(codigoConta);
+
+        return conta.getMovimentacoesOrigem();
+    }
+
+    public List<Movimentacao> buscarEntradasPorConta(Long codigoConta) {
+        Conta conta = contaService.buscarPorCodigo(codigoConta);
+
+        return conta.getMovimentacoesDestino();
+    }
+
     public Movimentacao criarMovimentacao(MovimentacaoDto movimentacaoDto) {
-        Movimentacao movimentacao = movimentacaoDto.toModel();
-        Conta contaOrigem = movimentacaoDto.getCodigoContaOrigem() != null ?
-                contaService.buscarPorCodigo(movimentacaoDto.getCodigoContaOrigem()) : null;
-        Conta contaDestino = movimentacaoDto.getCodigoContaDestino() != null ?
-                contaService.buscarPorCodigo(movimentacaoDto.getCodigoContaDestino()) : null;
-        movimentacao.setContaOrigem(contaOrigem);
-        movimentacao.setContaDestino(contaDestino);
-        contaService.atualizarSaldo(contaOrigem, contaDestino, movimentacao.getValor());
+        Movimentacao movimentacao = movimentacaoDto.toModel(contaService);
+        contaService.atualizarSaldo(movimentacao.getContaOrigem(), movimentacao.getContaDestino(), movimentacao.getValor());
         return movimentacaoRepository.save(movimentacao);
     }
 }

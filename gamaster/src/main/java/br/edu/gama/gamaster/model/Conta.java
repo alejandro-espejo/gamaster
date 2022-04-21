@@ -77,7 +77,7 @@ public abstract class Conta {
 	private CartaoCredito cartao;
 
 	@NotNull
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cod_cliente")
 	private Cliente cliente;
 
