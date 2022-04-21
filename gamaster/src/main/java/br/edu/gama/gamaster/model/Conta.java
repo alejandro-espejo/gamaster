@@ -1,27 +1,17 @@
 package br.edu.gama.gamaster.model;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_conta")
@@ -30,29 +20,32 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "codigo")
+@NoArgsConstructor
+@ToString
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "codigo")
 public abstract class Conta {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "codigo")
 	private Long codigo;
-	
+
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo_conta")
 	private TipoConta tipoConta;
-	
+
 	@Column(name = "saldo")
 	private BigDecimal saldo;
-	
+
 	@NotBlank
 	@Column(name = "agencia")
 	private String agencia;
-	
+
 	@NotBlank
 	@Column(name = "numero_conta")
 	private String numeroConta;
-	
+
 	@NotNull
 	@Column(name = "data_criacao")
 	private LocalDate dataCriacao;
@@ -61,9 +54,13 @@ public abstract class Conta {
 //	private Cliente cliente;
 
 	@OneToMany(mappedBy = "contaOrigem")
+	@JsonBackReference
+	@ToString.Exclude
 	private List<Movimentacao> movimentacoesOrigem = new ArrayList<>();
 
 	@OneToMany(mappedBy = "contaDestino")
+	@JsonBackReference
+	@ToString.Exclude
 	private List<Movimentacao> movimentacoesDestino = new ArrayList<>();
 
 	public Conta(BigDecimal saldo, String agencia, String numeroConta) {
@@ -72,12 +69,13 @@ public abstract class Conta {
 		this.numeroConta = numeroConta;
 	}
 
-	public abstract BigDecimal getSaldo();
+//	public abstract BigDecimal getSaldo();
 
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cod_cartao")
+	@ToString.Exclude
 	private CartaoCredito cartao;
-	
+
 	@NotNull
 	@OneToOne
 	@JoinColumn(name = "cod_cliente")

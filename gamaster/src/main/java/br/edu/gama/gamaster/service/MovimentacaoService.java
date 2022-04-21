@@ -1,0 +1,46 @@
+package br.edu.gama.gamaster.service;
+
+import br.edu.gama.gamaster.model.Conta;
+import br.edu.gama.gamaster.model.Movimentacao;
+import br.edu.gama.gamaster.model.dto.MovimentacaoDto;
+import br.edu.gama.gamaster.repository.MovimentacaoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class MovimentacaoService {
+
+    @Autowired
+    private MovimentacaoRepository movimentacaoRepository;
+
+    @Autowired
+    private ContaService contaService;
+
+    public List<Movimentacao> buscarMovimentacaoPorConta(Long codigoConta) {
+        Conta conta = contaService.buscarPorCodigo(codigoConta);
+
+        return movimentacaoRepository.findByContaOrigemOrContaDestino(conta, conta);
+    }
+
+    public List<Movimentacao> buscarMovimentacaoEntreContas(Long codigoContaOrigem, Long codigoContaDestino) {
+        Conta contaOrigem = contaService.buscarPorCodigo(codigoContaOrigem);
+        Conta contaDestino = contaService.buscarPorCodigo(codigoContaDestino);
+
+        return movimentacaoRepository.findByContaOrigemAndContaDestino(contaOrigem, contaDestino);
+    }
+
+    public Movimentacao criarMovimentacao(MovimentacaoDto movimentacaoDto) {
+        Movimentacao movimentacao = movimentacaoDto.toModel();
+        Conta contaOrigem = movimentacaoDto.getCodigoContaOrigem() != null ?
+                contaService.buscarPorCodigo(movimentacaoDto.getCodigoContaOrigem()) : null;
+        Conta contaDestino = movimentacaoDto.getCodigoContaDestino() != null ?
+                contaService.buscarPorCodigo(movimentacaoDto.getCodigoContaDestino()) : null;
+        movimentacao.setContaOrigem(contaOrigem);
+        movimentacao.setContaDestino(contaDestino);
+        contaService.atualizarSaldo(contaOrigem, contaDestino, movimentacao.getValor());
+        return movimentacaoRepository.save(movimentacao);
+    }
+}
