@@ -2,7 +2,9 @@ package br.edu.gama.gamaster.controller;
 
 import br.edu.gama.gamaster.event.RecursoCriadoEvent;
 import br.edu.gama.gamaster.model.Movimentacao;
-import br.edu.gama.gamaster.model.dto.MovimentacaoDto;
+import br.edu.gama.gamaster.model.dto.MovimentacaoDepositoDto;
+import br.edu.gama.gamaster.model.dto.MovimentacaoSaqueDto;
+import br.edu.gama.gamaster.model.dto.MovimentacaoTransferenciaDto;
 import br.edu.gama.gamaster.service.MovimentacaoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -15,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -61,11 +64,29 @@ public class MovimentacaoController {
         return ResponseEntity.ok(movimentacaoList);
     }
 
-    @PostMapping
-    @Operation(summary = "Cria e retorna um objeto movimentação", tags = {"movimentação"})
+    @PostMapping("/transferencia")
+    @Operation(summary = "Realiza uma transferência e retorna um objeto movimentação", tags = {"movimentação"})
 	@ApiResponses({@ApiResponse(responseCode = "201", description = "Created")})
-    public ResponseEntity<Movimentacao> cadastrar(@RequestBody MovimentacaoDto movimentacaoDto, HttpServletResponse response) {
-        Movimentacao movimentacaoSalva = movimentacaoService.criarMovimentacao(movimentacaoDto);
+    public ResponseEntity<Movimentacao> fazerTransferencia(@RequestBody @Valid MovimentacaoTransferenciaDto movimentacaoTransferenciaDto, HttpServletResponse response) {
+        Movimentacao movimentacaoSalva = movimentacaoService.fazerTransferencia(movimentacaoTransferenciaDto);
+        publisher.publishEvent(new RecursoCriadoEvent(this, response, movimentacaoSalva.getId()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(movimentacaoSalva);
+    }
+
+    @PostMapping("/deposito")
+    @Operation(summary = "Realiza um depósito e retorna um objeto movimentação", tags = {"movimentação"})
+    @ApiResponses({@ApiResponse(responseCode = "201", description = "Created")})
+    public ResponseEntity<Movimentacao> fazerDeposito(@RequestBody @Valid MovimentacaoDepositoDto movimentacaoDepositoDto, HttpServletResponse response) {
+        Movimentacao movimentacaoSalva = movimentacaoService.fazerDeposito(movimentacaoDepositoDto);
+        publisher.publishEvent(new RecursoCriadoEvent(this, response, movimentacaoSalva.getId()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(movimentacaoSalva);
+    }
+
+    @PostMapping("/saque")
+    @Operation(summary = "Realiza um saque e retorna um objeto movimentação", tags = {"movimentação"})
+    @ApiResponses({@ApiResponse(responseCode = "201", description = "Created")})
+    public ResponseEntity<Movimentacao> fazerSaque(@RequestBody @Valid MovimentacaoSaqueDto movimentacaoSaqueDto, HttpServletResponse response) {
+        Movimentacao movimentacaoSalva = movimentacaoService.fazerSaque(movimentacaoSaqueDto);
         publisher.publishEvent(new RecursoCriadoEvent(this, response, movimentacaoSalva.getId()));
         return ResponseEntity.status(HttpStatus.CREATED).body(movimentacaoSalva);
     }

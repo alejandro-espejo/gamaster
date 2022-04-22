@@ -85,17 +85,15 @@ public abstract class Conta {
 	@ToString.Exclude
 	private List<Movimentacao> movimentacoesDestino = new ArrayList<>();
 
-	public Conta(BigDecimal saldo, String agencia, String numeroConta) {
-		this.saldo = saldo;
-		this.agencia = agencia;
-		this.numeroConta = numeroConta;
-	}
-
-//	public abstract BigDecimal getSaldo();
-
 	@NotNull
 	@OneToOne
 	@JoinColumn(name = "cod_cliente", nullable = false)
 	private Cliente cliente;
 
+	public Conta(BigDecimal saldo, String agencia, String numeroConta) {
+		this.saldo = saldo;
+		this.agencia = agencia;
+		this.numeroConta = numeroConta;
+	}
+//	public abstract BigDecimal getSaldo();
 }
