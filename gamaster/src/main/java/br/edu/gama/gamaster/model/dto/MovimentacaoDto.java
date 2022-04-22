@@ -1,5 +1,6 @@
 package br.edu.gama.gamaster.model.dto;
 
+import br.edu.gama.gamaster.exceptionhandler.ContasInformadasInvalidasException;
 import br.edu.gama.gamaster.model.Conta;
 import br.edu.gama.gamaster.model.Movimentacao;
 import br.edu.gama.gamaster.model.TipoMovimentacao;
@@ -28,6 +29,10 @@ public class MovimentacaoDto {
         Movimentacao movimentacao = new Movimentacao();
         movimentacao.setValor(this.valor);
         movimentacao.setDataMovimentacao(LocalDateTime.now());
+
+        if (this.codigoContaOrigem == null && this.codigoContaDestino == null) {
+            throw new ContasInformadasInvalidasException();
+        }
 
         Conta contaOrigem = this.codigoContaOrigem != null ?
                 contaService.buscarPorCodigo(this.codigoContaOrigem) : null;
