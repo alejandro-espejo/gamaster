@@ -58,7 +58,7 @@ public class ContaService {
                         .compareTo(valor) >= 0) {
                 contaOrigem.setSaldo(contaOrigem.getSaldo().subtract(valor));
             } else {
-                throw new DataIntegrityViolationException(contaOrigem.getCodigo().toString(), new ContaSemSaldoException(contaOrigem.getCodigo()));
+                throw new ContaSemSaldoException();
             }
             contaRepository.saveAndFlush(contaOrigem);
         }
