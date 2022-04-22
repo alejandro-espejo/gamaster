@@ -38,15 +38,15 @@ public class CartaoCreditoService {
 		return cartaoCreditoRepository.save(cartaoCredito);
 	}
 
+	public void excluirCartao(Long codigo) {
+		CartaoCredito cartaoCredito = buscarCartaoPeloCodigo(codigo);
+		cartaoCreditoRepository.delete(cartaoCredito);
+	}
+	
 	public CartaoCredito atualizarCartao(Long codigo, CartaoCredito cartaoCredito) {
 		CartaoCredito cartaoSalvo = buscarCartaoPeloCodigo(codigo);
 		BeanUtils.copyProperties(cartaoCredito, cartaoSalvo, "codigo");
 		return cartaoCreditoRepository.save(cartaoSalvo);
 	}
 
-	public void excluirCartao(Long codigo) {
-		CartaoCredito cartaoCredito = buscarCartaoPeloCodigo(codigo);
-		cartaoCreditoRepository.delete(cartaoCredito);
-
-	}
 }

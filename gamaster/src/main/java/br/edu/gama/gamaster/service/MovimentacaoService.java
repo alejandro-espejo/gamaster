@@ -1,15 +1,14 @@
 package br.edu.gama.gamaster.service;
 
-import br.edu.gama.gamaster.exceptionhandler.ContaSemSaldoException;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import br.edu.gama.gamaster.model.Conta;
 import br.edu.gama.gamaster.model.Movimentacao;
 import br.edu.gama.gamaster.model.dto.MovimentacaoDto;
 import br.edu.gama.gamaster.repository.MovimentacaoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class MovimentacaoService {
