@@ -10,8 +10,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.BeanUtils;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -19,43 +20,33 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MovimentacaoDto {
+public class MovimentacaoTransferenciaDto {
 
+    @NotNull
 	@Schema(description = "Valor da movimentação", example = "500.00")
     private BigDecimal valor;
-	
+
+    @NotNull
 	@Schema(description = "Conta de origem da movimentação", example = "1")
     private Long codigoContaOrigem;
-	
+
+    @NotNull
 	@Schema(description = "Conta de destino da movimentação", example = "2")
     private Long codigoContaDestino;
 
-
     public Movimentacao toModel(ContaService contaService){
         Movimentacao movimentacao = new Movimentacao();
+        Conta contaOrigem = contaService.buscarPorCodigo(this.codigoContaOrigem);
+        Conta contaDestino = contaService.buscarPorCodigo(this.codigoContaDestino);
         movimentacao.setValor(this.valor);
         movimentacao.setDataMovimentacao(LocalDateTime.now());
-
-        if (this.codigoContaOrigem == null && this.codigoContaDestino == null) {
-            throw new ContasInformadasInvalidasException();
-        }
-
-        Conta contaOrigem = this.codigoContaOrigem != null ?
-                contaService.buscarPorCodigo(this.codigoContaOrigem) : null;
-        Conta contaDestino = this.codigoContaDestino != null ?
-                contaService.buscarPorCodigo(this.codigoContaDestino) : null;
-
         movimentacao.setContaOrigem(contaOrigem);
         movimentacao.setContaDestino(contaDestino);
+        movimentacao.setTipoMovimentacao(TipoMovimentacao.TRANSFERENCIA);
 
-        if(contaOrigem == null){
-            movimentacao.setTipoMovimentacao(TipoMovimentacao.ENTRADA);
-        } else if (contaDestino == null) {
-            movimentacao.setTipoMovimentacao(TipoMovimentacao.SAIDA);
-        }else{
-            movimentacao.setTipoMovimentacao(TipoMovimentacao.TRANSFERENCIA);
-        }
-
+//        if (this.codigoContaOrigem == null && this.codigoContaDestino == null) {
+//            throw new ContasInformadasInvalidasException();
+//        }
         return movimentacao;
     }
 }

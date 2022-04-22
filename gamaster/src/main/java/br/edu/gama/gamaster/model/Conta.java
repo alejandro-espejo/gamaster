@@ -62,14 +62,6 @@ public abstract class Conta {
 	@ToString.Exclude
 	private List<Movimentacao> movimentacoesDestino = new ArrayList<>();
 
-	public Conta(BigDecimal saldo, String agencia, String numeroConta) {
-		this.saldo = saldo;
-		this.agencia = agencia;
-		this.numeroConta = numeroConta;
-	}
-
-//	public abstract BigDecimal getSaldo();
-
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cod_cartao")
 	@ToString.Exclude
@@ -80,4 +72,10 @@ public abstract class Conta {
 	@JoinColumn(name = "cod_cliente", nullable = false)
 	private Cliente cliente;
 
+	public Conta(BigDecimal saldo, String agencia, String numeroConta) {
+		this.saldo = saldo;
+		this.agencia = agencia;
+		this.numeroConta = numeroConta;
+	}
+//	public abstract BigDecimal getSaldo();
 }
