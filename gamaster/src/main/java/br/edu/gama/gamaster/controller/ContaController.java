@@ -20,6 +20,9 @@ import br.edu.gama.gamaster.event.RecursoCriadoEvent;
 import br.edu.gama.gamaster.model.Conta;
 import br.edu.gama.gamaster.model.dto.ContaDto;
 import br.edu.gama.gamaster.service.ContaService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
 @RequestMapping("/contas")
@@ -32,17 +35,25 @@ public class ContaController {
 	private ApplicationEventPublisher publisher;
 
 	@GetMapping
+	@Operation(summary = "Retorna todos os objetos contas cadastradas", tags = {"Conta"})
+	@ApiResponses({@ApiResponse(responseCode = "200", description = "Successful Operation")})	
 	public List<Conta> buscarTodas() {
 		return contaService.buscarTodasContas();
 	}
 
 	@GetMapping("/{codigo}")
+	@Operation(summary = "Retorna apenas um objeto conta referente ao codigo informado", tags = {"Conta"})
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "Successful Operation"),
+		@ApiResponse(responseCode = "404", description = "Object Conta Not_Found")})	
 	public ResponseEntity<Conta> buscarPorCodigo(@PathVariable Long codigo) {
 		Conta conta = contaService.buscarPorCodigo(codigo);
 		return ResponseEntity.ok(conta);
 	}
 
 	@PostMapping
+	@Operation(summary = "Cria e retorna um objeto conta", tags = {"Conta"})
+	@ApiResponses({@ApiResponse(responseCode = "201", description = "Created")})	
 	public ResponseEntity<Conta> cadastrar(@Valid @RequestBody ContaDto conta, Boolean isContaEspecial,
 			HttpServletResponse response) {
 		Conta ContaSalva = contaService.criarConta(isContaEspecial, conta);

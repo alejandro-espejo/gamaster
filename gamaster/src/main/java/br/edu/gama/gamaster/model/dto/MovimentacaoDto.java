@@ -5,6 +5,7 @@ import br.edu.gama.gamaster.model.Conta;
 import br.edu.gama.gamaster.model.Movimentacao;
 import br.edu.gama.gamaster.model.TipoMovimentacao;
 import br.edu.gama.gamaster.service.ContaService;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,8 +21,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class MovimentacaoDto {
 
+	@Schema(description = "Valor da movimentação", example = "500.00")
     private BigDecimal valor;
+	
+	@Schema(description = "Conta de origem da movimentação", example = "1")
     private Long codigoContaOrigem;
+	
+	@Schema(description = "Conta de destino da movimentação", example = "2")
     private Long codigoContaDestino;
 
 
