@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -17,6 +19,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "tb_cartao")
@@ -64,5 +67,11 @@ public class CartaoCredito implements Serializable {
 	@Column(name = "limite_disponivel")
 	@Schema(description = "Limite disponivél no cartão gerenciado pela API", example = "2500.00")
 	private BigDecimal limiteDesponivel;
+	
+	@NotNull
+	@OneToOne
+	@JoinColumn(name = "cod_conta")
+	@ToString.Exclude
+	private Conta conta;
 
 }

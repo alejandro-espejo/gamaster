@@ -6,7 +6,7 @@ CREATE TABLE tb_cartao (
     bandeira VARCHAR(20) NOT NULL,
     portador VARCHAR(50) NOT NULL,
     limite DECIMAL(10,2) NOT NULL,
-    limite_disponivel DECIMAL(10,2),
+    limite_disponivel DECIMAL(10,2) DEFAULT 0,
     cod_conta BIGINT(20) NOT NULL,
     CONSTRAINT fk_conta FOREIGN KEY (cod_conta) REFERENCES tb_conta (codigo)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import br.edu.gama.gamaster.exceptionhandler.CartaoExistenteException;
 import br.edu.gama.gamaster.model.CartaoCredito;
+import br.edu.gama.gamaster.model.Conta;
 import br.edu.gama.gamaster.repository.CartaoCreditoRepository;
 
 @Service
@@ -16,6 +18,9 @@ public class CartaoCreditoService {
 
 	@Autowired
 	private CartaoCreditoRepository cartaoCreditoRepository;
+
+	@Autowired
+	private ContaService contaService;
 
 	public List<CartaoCredito> buscarTodos() {
 		return cartaoCreditoRepository.findAll();
@@ -34,19 +39,14 @@ public class CartaoCreditoService {
 		return cartaoCredito.get();
 	}
 
-	public CartaoCredito salvarCartao(CartaoCredito cartaoCredito) {
-		return cartaoCreditoRepository.save(cartaoCredito);
-	}
+	public CartaoCredito salvarCartao(Long codigo) {
+		Optional<CartaoCredito> cartaoSalvo = cartaoCreditoRepository.findByConta(codigo);
+		if(cartaoSalvo.isPresent()) {
+			throw new CartaoExistenteException();
+		}
+		CriarCartaoCredito criarCartao = new CriarCartaoCredito();
+		Conta conta = contaService.buscarPorCodigo(codigo);
+		return cartaoCreditoRepository.save(criarCartao.gerarCartao(conta));
 
-	public void excluirCartao(Long codigo) {
-		CartaoCredito cartaoCredito = buscarCartaoPeloCodigo(codigo);
-		cartaoCreditoRepository.delete(cartaoCredito);
 	}
-	
-	public CartaoCredito atualizarCartao(Long codigo, CartaoCredito cartaoCredito) {
-		CartaoCredito cartaoSalvo = buscarCartaoPeloCodigo(codigo);
-		BeanUtils.copyProperties(cartaoCredito, cartaoSalvo, "codigo");
-		return cartaoCreditoRepository.save(cartaoSalvo);
-	}
-
 }
