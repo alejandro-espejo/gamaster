@@ -1,20 +1,21 @@
 package br.edu.gama.gamaster.service;
 
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.stereotype.Service;
+
 import br.edu.gama.gamaster.exceptionhandler.ContaSemSaldoException;
 import br.edu.gama.gamaster.model.Conta;
 import br.edu.gama.gamaster.model.ContaCorrente;
 import br.edu.gama.gamaster.model.ContaEspecial;
 import br.edu.gama.gamaster.model.dto.ContaDto;
 import br.edu.gama.gamaster.repository.ContaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ContaService {

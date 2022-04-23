@@ -31,7 +31,7 @@ public class MovimentacaoController {
     private ApplicationEventPublisher publisher;
 
     @GetMapping
-    @Operation(summary = "Retorna todos os objetos movimentação de uma conta", tags = {"movimentação"})
+    @Operation(summary = "Retorna todos os objetos movimentação de uma conta", tags = {"Movimentação"})
 	@ApiResponses({@ApiResponse(responseCode = "200", description = "Successful Operation")})
     public ResponseEntity<List<Movimentacao>> buscarMovimentacoesPorConta(@RequestParam(name = "codigoConta") Long codigoConta) {
         List<Movimentacao> movimentacaoList = movimentacaoService.buscarMovimentacaoPorConta(codigoConta);
@@ -39,7 +39,7 @@ public class MovimentacaoController {
     }
 
     @GetMapping("/entre-contas")
-    @Operation(summary = "Retorna todos os objetos movimentação entre contas específicas", tags = {"movimentação"})
+    @Operation(summary = "Retorna todos os objetos movimentação entre contas específicas", tags = {"Movimentação"})
 	@ApiResponses({@ApiResponse(responseCode = "200", description = "Successful Operation")})
     public ResponseEntity<List<Movimentacao>> buscarMovimentacaoEntreContas(
             @RequestParam(name = "codigoContaOrigem") Long codigoContaOrigem,
@@ -49,7 +49,7 @@ public class MovimentacaoController {
     }
 
     @GetMapping("/saidas")
-    @Operation(summary = "Retorna todos os objetos movimentação de saida de uma conta específicas", tags = {"movimentação"})
+    @Operation(summary = "Retorna todos os objetos movimentação de saida de uma conta específicas", tags = {"Movimentação"})
 	@ApiResponses({@ApiResponse(responseCode = "200", description = "Successful Operation")})
     public ResponseEntity<List<Movimentacao>> buscarSaidasPorConta(@RequestParam(name = "codigoConta") Long codigoConta) {
         List<Movimentacao> movimentacaoList = movimentacaoService.buscarSaidasPorConta(codigoConta);
@@ -57,7 +57,7 @@ public class MovimentacaoController {
     }
 
     @GetMapping("/entradas")
-    @Operation(summary = "Retorna todos os objetos movimentação de entrada de uma conta específicas", tags = {"movimentação"})
+    @Operation(summary = "Retorna todos os objetos movimentação de entrada de uma conta específicas", tags = {"Movimentação"})
    	@ApiResponses({@ApiResponse(responseCode = "200", description = "Successful Operation")})
     public ResponseEntity<List<Movimentacao>> buscarEntradasPorConta(@RequestParam(name = "codigoConta") Long codigoConta) {
         List<Movimentacao> movimentacaoList = movimentacaoService.buscarEntradasPorConta(codigoConta);
@@ -65,7 +65,7 @@ public class MovimentacaoController {
     }
 
     @PostMapping("/transferencia")
-    @Operation(summary = "Realiza uma transferência e retorna um objeto movimentação", tags = {"movimentação"})
+    @Operation(summary = "Realiza uma transferência e retorna um objeto movimentação", tags = {"Movimentação"})
 	@ApiResponses({@ApiResponse(responseCode = "201", description = "Created")})
     public ResponseEntity<Movimentacao> fazerTransferencia(@RequestBody @Valid MovimentacaoTransferenciaDto movimentacaoTransferenciaDto, HttpServletResponse response) {
         Movimentacao movimentacaoSalva = movimentacaoService.fazerTransferencia(movimentacaoTransferenciaDto);
@@ -74,7 +74,7 @@ public class MovimentacaoController {
     }
 
     @PostMapping("/deposito")
-    @Operation(summary = "Realiza um depósito e retorna um objeto movimentação", tags = {"movimentação"})
+    @Operation(summary = "Realiza um depósito e retorna um objeto movimentação", tags = {"Movimentação"})
     @ApiResponses({@ApiResponse(responseCode = "201", description = "Created")})
     public ResponseEntity<Movimentacao> fazerDeposito(@RequestBody @Valid MovimentacaoDepositoDto movimentacaoDepositoDto, HttpServletResponse response) {
         Movimentacao movimentacaoSalva = movimentacaoService.fazerDeposito(movimentacaoDepositoDto);
@@ -83,7 +83,7 @@ public class MovimentacaoController {
     }
 
     @PostMapping("/saque")
-    @Operation(summary = "Realiza um saque e retorna um objeto movimentação", tags = {"movimentação"})
+    @Operation(summary = "Realiza um saque e retorna um objeto movimentação", tags = {"Movimentação"})
     @ApiResponses({@ApiResponse(responseCode = "201", description = "Created")})
     public ResponseEntity<Movimentacao> fazerSaque(@RequestBody @Valid MovimentacaoSaqueDto movimentacaoSaqueDto, HttpServletResponse response) {
         Movimentacao movimentacaoSalva = movimentacaoService.fazerSaque(movimentacaoSaqueDto);

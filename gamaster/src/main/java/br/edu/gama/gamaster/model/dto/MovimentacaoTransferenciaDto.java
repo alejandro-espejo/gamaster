@@ -1,6 +1,10 @@
 package br.edu.gama.gamaster.model.dto;
 
-import br.edu.gama.gamaster.exceptionhandler.ContasInformadasInvalidasException;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+import javax.validation.constraints.NotNull;
+
 import br.edu.gama.gamaster.model.Conta;
 import br.edu.gama.gamaster.model.Movimentacao;
 import br.edu.gama.gamaster.model.TipoMovimentacao;
@@ -10,11 +14,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
