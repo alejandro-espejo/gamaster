@@ -8,7 +8,7 @@ CREATE TABLE tb_cliente(
     complemento VARCHAR(50),
     bairro VARCHAR(50),
     cep VARCHAR(20),
-    cidade VARCHAR(20),
+    cidade VARCHAR(50),
     estado 	CHAR(2)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

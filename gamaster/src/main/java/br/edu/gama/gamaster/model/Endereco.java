@@ -39,7 +39,7 @@ public class Endereco {
 	private String cep;
 	
 	@Column(name = "cidade")
-	@Size(max = 20)
+	@Size(max = 50)
 	@Schema(description = "Cidade referente ao endereço", example = "São Bernado dos Campos")
 	private String cidade;
 	
