@@ -12,7 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @OpenAPIDefinition(
         info = @Info(
                 title = "Gamaster API",
-                description = "Api para Gerênciar contas e movimentações",
+                description = "Api para Gerenciar contas e movimentações",
                 version = "0.0.1",
                 contact = @Contact(name = "Equipe Gamaster", url = "gamaster.com.br", email = "desenvolvimento@gamaster.com.br")
                 ))
