@@ -8,6 +8,8 @@ import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -22,21 +24,30 @@ public class Movimentacao implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "codigo")
+    private Long codigo;
+    @NotNull
+    @Enumerated
+    @Column(name = "tipo_movimentacao")
     private TipoMovimentacao tipoMovimentacao;
 
     @CreationTimestamp
+    @NotNull
+    @Column(name="data_movimentacao")
     private LocalDateTime dataMovimentacao;
 
+    @NotNull
+    @Positive
+    @Column(name = "valor")
     private BigDecimal valor;
 
     @ManyToOne
-    @JoinColumn(name = "conta_origem_id")
+    @JoinColumn(name = "cod_conta_origem")
     @JsonIdentityReference(alwaysAsId = true)
     private Conta contaOrigem;
 
     @ManyToOne
-    @JoinColumn(name = "conta_destino_id")
+    @JoinColumn(name = "cod_conta_destino")
     @JsonIdentityReference(alwaysAsId = true)
     private Conta contaDestino;
 
