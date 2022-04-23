@@ -55,7 +55,7 @@ public abstract class Conta {
 	private TipoConta tipoConta;
 
 	@Column(name = "saldo")
-	private BigDecimal saldo;
+	private BigDecimal saldo = BigDecimal.ZERO;
 
 	@NotBlank
 	@Column(name = "agencia")
