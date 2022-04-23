@@ -26,3 +26,6 @@ VALUES ('Pretrolifera lopes LTDA', '47.869.444/0001-21', '(11) 3658-5544', 'M. T
 
 INSERT INTO tb_cliente(nome, cpf_cnpj, telefone, logradouro, numero, complemento, bairro, cep, cidade, estado)
 VALUES ('Bernado Gomes Pordutos Alimenticios', '88.670.235/0001-31', '(99) 3698-8521', 'Rua dos Alpes', '185', 'Qd. 2 Lt. 1', 'Jardim Bela Morada', '12589-968', 'São Luiz', 'MA');
+
+INSERT INTO tb_cliente(nome, cpf_cnpj, telefone, logradouro, numero, complemento, bairro, cep, cidade, estado)
+VALUES ('Gusttavo Lima Produtora LTDA', '63.254.635/0001-74', '(99) 3698-8521', 'Rua dos Alpes', '185', 'Qd. 2 Lt. 1', 'Jardim Bela Morada', '12589-968', 'São Luiz', 'MA');

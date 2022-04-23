@@ -34,4 +34,13 @@ public class GamasterExceptionHandlerContasInvalidas extends ResponseEntityExcep
         List<GamasterExceptionHandler.Erro> erros = Arrays.asList(new GamasterExceptionHandler.Erro(mensagemUsuario, mensagemDesenvolvedor));
         return ResponseEntity.badRequest().body(erros);
     }
+    
+    @ExceptionHandler({CartaoExistenteException.class})
+    public ResponseEntity<Object> handleContaSemSaldoException(CartaoExistenteException ex){
+        String mensagemUsuario = messageSource.getMessage("cartao.existente", null,
+                LocaleContextHolder.getLocale());
+        String mensagemDesenvolvedor = ex.toString();
+        List<GamasterExceptionHandler.Erro> erros = Arrays.asList(new GamasterExceptionHandler.Erro(mensagemUsuario, mensagemDesenvolvedor));
+        return ResponseEntity.badRequest().body(erros);
+    }
 }
