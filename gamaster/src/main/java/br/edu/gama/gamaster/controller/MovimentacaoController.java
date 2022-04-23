@@ -69,7 +69,7 @@ public class MovimentacaoController {
 	@ApiResponses({@ApiResponse(responseCode = "201", description = "Created")})
     public ResponseEntity<Movimentacao> fazerTransferencia(@RequestBody @Valid MovimentacaoTransferenciaDto movimentacaoTransferenciaDto, HttpServletResponse response) {
         Movimentacao movimentacaoSalva = movimentacaoService.fazerTransferencia(movimentacaoTransferenciaDto);
-        publisher.publishEvent(new RecursoCriadoEvent(this, response, movimentacaoSalva.getId()));
+        publisher.publishEvent(new RecursoCriadoEvent(this, response, movimentacaoSalva.getCodigo()));
         return ResponseEntity.status(HttpStatus.CREATED).body(movimentacaoSalva);
     }
 
@@ -78,7 +78,7 @@ public class MovimentacaoController {
     @ApiResponses({@ApiResponse(responseCode = "201", description = "Created")})
     public ResponseEntity<Movimentacao> fazerDeposito(@RequestBody @Valid MovimentacaoDepositoDto movimentacaoDepositoDto, HttpServletResponse response) {
         Movimentacao movimentacaoSalva = movimentacaoService.fazerDeposito(movimentacaoDepositoDto);
-        publisher.publishEvent(new RecursoCriadoEvent(this, response, movimentacaoSalva.getId()));
+        publisher.publishEvent(new RecursoCriadoEvent(this, response, movimentacaoSalva.getCodigo()));
         return ResponseEntity.status(HttpStatus.CREATED).body(movimentacaoSalva);
     }
 
@@ -87,7 +87,7 @@ public class MovimentacaoController {
     @ApiResponses({@ApiResponse(responseCode = "201", description = "Created")})
     public ResponseEntity<Movimentacao> fazerSaque(@RequestBody @Valid MovimentacaoSaqueDto movimentacaoSaqueDto, HttpServletResponse response) {
         Movimentacao movimentacaoSalva = movimentacaoService.fazerSaque(movimentacaoSaqueDto);
-        publisher.publishEvent(new RecursoCriadoEvent(this, response, movimentacaoSalva.getId()));
+        publisher.publishEvent(new RecursoCriadoEvent(this, response, movimentacaoSalva.getCodigo()));
         return ResponseEntity.status(HttpStatus.CREATED).body(movimentacaoSalva);
     }
 }

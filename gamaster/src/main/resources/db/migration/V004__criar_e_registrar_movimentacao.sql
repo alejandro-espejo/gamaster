@@ -1,22 +1,22 @@
-create table tb_movimentacao (
-	id bigint primary key auto_increment,
-    data_movimentacao datetime,
-    tipo_movimentacao int,
-    valor decimal(19,2) null,
-    conta_destino_id bigint null,
-    conta_origem_id bigint null,
-    foreign key (conta_destino_id) references tb_conta(codigo),
-    foreign key (conta_origem_id) references tb_conta(codigo)
+CREATE TABLE tb_movimentacao (
+	codigo BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
+    data_movimentacao DATETIME NOT NULL,
+    tipo_movimentacao VARCHAR(20) NOT NULL,
+    valor DECIMAL(15,2) NOT NULL,
+    cod_conta_destino BIGINT(20),
+    cod_conta_origem BIGINT(20),
+    FOREIGN KEY(cod_conta_destino) REFERENCES tb_conta(codigo),
+    FOREIGN KEY(cod_conta_origem) REFERENCES tb_conta(codigo)
 );
 -- ENTRADA
-insert into tb_movimentacao (data_movimentacao, tipo_movimentacao, valor, conta_destino_id) values (utc_timestamp, 1, 100, 1);
-insert into tb_movimentacao (data_movimentacao, tipo_movimentacao, valor, conta_destino_id) values (utc_timestamp, 1, 200, 2);
-insert into tb_movimentacao (data_movimentacao, tipo_movimentacao, valor, conta_destino_id) values (utc_timestamp, 1, 300, 3);
+INSERT INTO tb_movimentacao (data_movimentacao, tipo_movimentacao, valor, cod_conta_destino) VALUES (UTC_TIMESTAMP, 'ENTRADA', 100, 1);
+INSERT INTO tb_movimentacao (data_movimentacao, tipo_movimentacao, valor, cod_conta_destino) VALUES (UTC_TIMESTAMP, 'ENTRADA', 200, 2);
+INSERT INTO tb_movimentacao (data_movimentacao, tipo_movimentacao, valor, cod_conta_destino) VALUES (UTC_TIMESTAMP, 'ENTRADA', 300, 3);
 -- TRANSFERENCIA
-insert into tb_movimentacao (data_movimentacao, tipo_movimentacao, valor, conta_destino_id, conta_origem_id) values (utc_timestamp, 3, 20, 1, 2);
-insert into tb_movimentacao (data_movimentacao, tipo_movimentacao, valor, conta_destino_id, conta_origem_id) values (utc_timestamp, 3, 230, 1, 3);
-insert into tb_movimentacao (data_movimentacao, tipo_movimentacao, valor, conta_destino_id, conta_origem_id) values (utc_timestamp, 3, 100, 1, 2);
-insert into tb_movimentacao (data_movimentacao, tipo_movimentacao, valor, conta_destino_id, conta_origem_id) values (utc_timestamp, 3, 70, 2, 3);
+INSERT INTO tb_movimentacao (data_movimentacao, tipo_movimentacao, valor, cod_conta_destino, cod_conta_origem) VALUES (UTC_TIMESTAMP, 'TRANSFERENCIA', 20, 1, 2);
+INSERT INTO tb_movimentacao (data_movimentacao, tipo_movimentacao, valor, cod_conta_destino, cod_conta_origem) VALUES (UTC_TIMESTAMP, 'TRANSFERENCIA', 230, 1, 3);
+INSERT INTO tb_movimentacao (data_movimentacao, tipo_movimentacao, valor, cod_conta_destino, cod_conta_origem) VALUES (UTC_TIMESTAMP, 'TRANSFERENCIA', 100, 1, 2);
+INSERT INTO tb_movimentacao (data_movimentacao, tipo_movimentacao, valor, cod_conta_destino, cod_conta_origem) VALUES (UTC_TIMESTAMP, 'TRANSFERENCIA', 70, 2, 3);
 -- SAIDA
-insert into tb_movimentacao (data_movimentacao, tipo_movimentacao, valor, conta_origem_id) values (utc_timestamp, 2, 450, 1);
-insert into tb_movimentacao (data_movimentacao, tipo_movimentacao, valor, conta_origem_id) values (utc_timestamp, 2, 150, 2);
+INSERT INTO tb_movimentacao (data_movimentacao, tipo_movimentacao, valor, cod_conta_origem) VALUES (UTC_TIMESTAMP, 'SAIDA', 450, 1);
+INSERT INTO tb_movimentacao (data_movimentacao, tipo_movimentacao, valor, cod_conta_origem) VALUES (UTC_TIMESTAMP, 'SAIDA', 150, 2);
