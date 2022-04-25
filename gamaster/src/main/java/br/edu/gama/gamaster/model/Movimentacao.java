@@ -1,91 +1,68 @@
 package br.edu.gama.gamaster.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Objects;
-import java.util.UUID;
 
-public class Movimentacao {
 
-	private UUID id;
-	private TipoMovimentacao tipoMovimentacao;
-	private LocalDateTime dataMovimentacao;
-	private BigDecimal valor;
-	private Conta contaOrigem;
-	private Conta contaDestino;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-	public Movimentacao(UUID id, TipoMovimentacao tipoMovimentacao, LocalDateTime dataMovimentacao, BigDecimal valor,
-			Conta contaOrigem, Conta contaDestino) {
-		this.id = id;
-		this.tipoMovimentacao = tipoMovimentacao;
-		this.dataMovimentacao = dataMovimentacao;
-		this.valor = valor;
-		this.contaOrigem = contaOrigem;
-		this.contaDestino = contaDestino;
-	}
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
-	public UUID getId() {
-		return id;
-	}
+import org.hibernate.annotations.CreationTimestamp;
 
-	public void setId(UUID id) {
-		this.id = id;
-	}
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 
-	public TipoMovimentacao getTipoMovimentacao() {
-		return tipoMovimentacao;
-	}
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-	public void setTipoMovimentacao(TipoMovimentacao tipoMovimentacao) {
-		this.tipoMovimentacao = tipoMovimentacao;
-	}
+@Entity
+@Table(name = "tb_movimentacao")
+@Getter
+@Setter
+@ToString
+public class Movimentacao implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-	public LocalDateTime getDataMovimentacao() {
-		return dataMovimentacao;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "codigo")
+    private Long codigo;
+    
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_movimentacao")
+    private TipoMovimentacao tipoMovimentacao;
 
-	public void setDataMovimentacao(LocalDateTime dataMovimentacao) {
-		this.dataMovimentacao = dataMovimentacao;
-	}
+    @CreationTimestamp
+    @NotNull
+    @Column(name="data_movimentacao")
+    private LocalDateTime dataMovimentacao;
 
-	public BigDecimal getValor() {
-		return valor;
-	}
+    @NotNull
+    @Positive
+    @Column(name = "valor")
+    private BigDecimal valor;
 
-	public void setValor(BigDecimal valor) {
-		this.valor = valor;
-	}
+    @ManyToOne
+    @JoinColumn(name = "cod_conta_origem")
+    @JsonIdentityReference(alwaysAsId = true)
+    private Conta contaOrigem;
 
-	public Conta getContaOrigem() {
-		return contaOrigem;
-	}
+    @ManyToOne
+    @JoinColumn(name = "cod_conta_destino")
+    @JsonIdentityReference(alwaysAsId = true)
+    private Conta contaDestino;
 
-	public void setContaOrigem(Conta contaOrigem) {
-		this.contaOrigem = contaOrigem;
-	}
-
-	public Conta getContaDestino() {
-		return contaDestino;
-	}
-
-	public void setContaDestino(Conta contaDestino) {
-		this.contaDestino = contaDestino;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public String toString() {
-		return "Movimentacao{" +
-				"id=" + id +
-				", tipoMovimentacao=" + tipoMovimentacao +
-				", dataMovimentacao=" + dataMovimentacao +
-				", valor=" + valor +
-				", contaOrigem=" + contaOrigem +
-				", contaDestino=" + contaDestino +
-				'}';
-	}
 }
