@@ -14,6 +14,6 @@ import lombok.Setter;
 @Setter
 public class ContaEspecial extends Conta {
 
-	protected BigDecimal limiteDeCreditoPreAprovado;
+	private BigDecimal limiteDeCreditoPreAprovado;
 
 }
