@@ -57,7 +57,7 @@ class ClienteServiceTest {
 
 	@Test
 	void testAtualizarCliente() {
-		// teste de update Cliente;;;;
+		// teste de update Cliente;;
 	}
 
 	@Test
