@@ -1,6 +1,7 @@
 package br.edu.gama.gamaster.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import br.edu.gama.gamaster.model.Cliente;
 import br.edu.gama.gamaster.model.Endereco;
@@ -57,7 +59,18 @@ class ClienteServiceTest {
 
 	@Test
 	void testAtualizarCliente() {
-		// teste de update Cliente
+		Cliente clienteAtualizado = new Cliente(1L, "Cliente Gamaster2", "125.856.965-58", "(62) 3698-6325",
+				new Endereco());
+		Cliente clienteEncontrado = new Cliente(1L, "Cliente Gamaster", "125.856.965-58", "(62) 3698-6325",
+				new Endereco());
+
+		when(clienteRepository.save(clienteAtualizado)).thenReturn(clienteAtualizado);
+		when(clienteRepository.findById(1L)).thenReturn(Optional.of(clienteEncontrado));
+
+		Cliente cliente = clienteService.atualizarCliente(1L, clienteAtualizado);
+
+		assertEquals("Cliente Gamaster2", cliente.getNome());
+		assertEquals(clienteEncontrado.getCodigo(), cliente.getCodigo());
 	}
 
 	@Test
@@ -69,4 +82,12 @@ class ClienteServiceTest {
 		verify(clienteRepository, times(1)).save(cliente);
 	}
 
+	@Test
+	void testBuscarPorCodigo_ClinteNaoEncontradoException() {
+		when(clienteRepository.findById(1L)).thenReturn(Optional.empty());
+
+		assertThrows(EmptyResultDataAccessException.class, () -> {
+			clienteService.buscarPorCodigo(1L);
+		});
+	}
 }
