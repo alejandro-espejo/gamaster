@@ -15,6 +15,8 @@ import java.util.List;
 @NoArgsConstructor
 public class ContaCorrente extends Conta {
 
-    public ContaCorrente(Long codigo, TipoConta tipoConta, BigDecimal saldo, String agencia, String numeroConta, LocalDate dataCriacao, List<Movimentacao> movimentacoesOrigem, List<Movimentacao> movimentacoesDestino, Cliente cliente) {
-    }
+	public ContaCorrente(Long codigo, TipoConta tipoConta, BigDecimal saldo, String agencia, String numeroConta,
+			LocalDate dataCriacao, List<Movimentacao> movimentacoesOrigem, List<Movimentacao> movimentacoesDestino,
+			Cliente cliente) {
+	}
 }
