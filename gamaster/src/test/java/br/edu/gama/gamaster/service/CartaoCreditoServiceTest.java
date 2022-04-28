@@ -16,9 +16,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import br.edu.gama.gamaster.model.CartaoCredito;
+import br.edu.gama.gamaster.model.Cliente;
 import br.edu.gama.gamaster.model.ContaCorrente;
 import br.edu.gama.gamaster.model.ContaEspecial;
+import br.edu.gama.gamaster.model.Endereco;
+import br.edu.gama.gamaster.model.dto.ContaDto;
 import br.edu.gama.gamaster.repository.CartaoCreditoRepository;
+import br.edu.gama.gamaster.repository.ContaRepository;
 
 @ExtendWith(MockitoExtension.class)
 class CartaoCreditoServiceTest {
@@ -58,10 +62,4 @@ class CartaoCreditoServiceTest {
 		CartaoCredito cartao = cartaoCreditoService.buscarPorCodigo(1L);
 		assertEquals("1478963214789632", cartao.getNumero());
 	}
-
-	@Test
-	void testSalvarCartao() {
-		fail("Not yet implemented");
-	}
-
 }
