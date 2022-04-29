@@ -1,7 +1,9 @@
 package br.edu.gama.gamaster.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -15,7 +17,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import org.springframework.dao.EmptyResultDataAccessException;
+
 
 import br.edu.gama.gamaster.model.Cliente;
 import br.edu.gama.gamaster.model.Endereco;
@@ -29,7 +33,6 @@ class ClienteServiceTest {
 
 	@Mock
 	private ClienteRepository clienteRepository;
-	
 
 	@Test
 	void testBuscarTodos() {
