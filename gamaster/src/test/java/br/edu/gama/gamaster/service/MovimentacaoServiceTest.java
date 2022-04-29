@@ -3,19 +3,14 @@ package br.edu.gama.gamaster.service;
 import br.edu.gama.gamaster.model.Cliente;
 import br.edu.gama.gamaster.model.Conta;
 import br.edu.gama.gamaster.model.Movimentacao;
-import br.edu.gama.gamaster.model.TipoMovimentacao;
 import br.edu.gama.gamaster.model.dto.ContaDto;
-import br.edu.gama.gamaster.model.dto.MovimentacaoSaqueDto;
 import br.edu.gama.gamaster.repository.MovimentacaoRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.BeanUtils;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
